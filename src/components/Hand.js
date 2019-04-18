@@ -26,7 +26,7 @@ export default class Hand extends Component {
                 <h5>{this.props.score}</h5>
             )}
             {this.props.playerPlaying ? (
-                <div className="cards-container">{cards[1]}</div>
+                <div className="cards-container">{cards[0]}</div>
             ) : (
                 <div className="cards-container">{cards}</div>
             )}
@@ -41,14 +41,12 @@ export default class Hand extends Component {
                     <button
                     className="sm"
                     onClick={event => this.props.handleDrawCardEvent(event)}
-                    value={this.props.name.toLowerCase()}
                     >
                     Hit
                     </button>
                     <button
                     className="sm"
                     onClick={event => this.props.handleStandEvent(event)}
-                    value={this.props.name.toLowerCase()}
                     >
                     Stand
                     </button>
@@ -56,7 +54,6 @@ export default class Hand extends Component {
                         <button
                         className="sm"
                         onClick={event => this.props.handleDoubleDownEvent(event)}
-                        value={this.props.name.toLowerCase()}
                         >
                         Double Down
                         </button>
@@ -68,7 +65,6 @@ export default class Hand extends Component {
                 <button
                 className="sm"
                 onClick={event => this.props.handleDealEvent(event)}
-                value={this.props.name.toLowerCase()}
                 >
                 Deal
                 </button>

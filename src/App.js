@@ -12,12 +12,14 @@ export default class App extends Component {
       dealerScore: 0,
       dealerInitialScore: 0,
       dealerHasAce: false,
+      dealerBlackJack: false,
       playerHand: [],
       playerScore: 0,
       playerHasAce: false,
+      playerBlackJack: false,
       gameMessage: "",
-    }
-  }
+    };
+  };
 
   // Fetches deck(s) from Deck of Cards API
   componentDidMount() {
@@ -26,9 +28,9 @@ export default class App extends Component {
       .then(json => {
         this.setState({
           deckId: json.deck_id
-        })
-      })
-  }
+        });
+      });
+  };
 
   // Return blackjack value of input card value 
   returnValue(value) {
@@ -49,7 +51,7 @@ export default class App extends Component {
     };
 
     return cardValues[value];
-  }
+  };
 
   // When Start Game is clicked
   handleDealHand() {
@@ -63,26 +65,26 @@ export default class App extends Component {
         if (value0 === 11 || value2 === 11) {
           this.setState({
             playerHasAce: true
-          })
-        }
+          });
+        };
         
         if (value1 === 11 || value3 === 11) {
           this.setState({
             dealerHasAce: true
-          })
-        }
+          });
+        };
         this.setState({
           gameStarted: true,
           playerPlaying: true,
           dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
           dealerScore: (this.state.dealerScore += value1 + value3),
-          dealerInitialScore:  value3,
+          dealerInitialScore:  value1,
           playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
           playerScore: (this.state.playerScore += value0 + value2)
         });
         this.blackJackChecker();
       });
-  }
+  };
 
   // When End Game is pressed a new deck is drawn
   handleEndGame() {
@@ -91,8 +93,8 @@ export default class App extends Component {
     .then(json => {
       this.setState({
         deckId: json.deck_id
-      })
-    })
+      });
+    });
     this.setState({
       gameStarted: false,
       playerPlaying: false,
@@ -100,30 +102,50 @@ export default class App extends Component {
       dealerScore: 0,
       dealerInitialScore: 0,
       dealerHasAce: false,
+      dealerBlackJack: false,
       playerHand: [],
       playerScore: 0,
       playerHasAce: false,
+      playerBlackJack: false,
       gameMessage: ""
     });
-  }
+  };
 
   // Checks for blackjack
   blackJackChecker() {
+    
+    // Check for player
     if (this.returnValue(this.state.playerHand[0].value) === 10 && this.returnValue(this.state.playerHand[1].value) === 11) {
       this.setState({
-        playerScore: 21,
+        playerBlackJack: true,
         playerPlaying: false,
         gameMessage: "You got a Blackjack!"
-      })
-    }
+      });
+    };
     if (this.returnValue(this.state.playerHand[1].value) === 10 && this.returnValue(this.state.playerHand[0].value) === 11) {
       this.setState({
-        playerScore: 21,
+        playerBlackJack: true,
         playerPlaying: false,
         gameMessage: "You got a Blackjack!"
-      })
-    }
-  }
+      });
+    };
+
+    // Check for dealer
+    if (this.returnValue(this.state.dealerHand[0].value) === 10 && this.returnValue(this.state.dealerHand[1].value) === 11) {
+      this.setState({
+        dealerBlackJack: true,
+        playerPlaying: false,
+        gameMessage: "Dealer got a Blackjack!"
+      });
+    };
+    if (this.returnValue(this.state.dealerHand[1].value) === 10 && this.returnValue(this.state.dealerHand[0].value) === 11) {
+      this.setState({
+        dealerBlackJack: true,
+        playerPlaying: false,
+        gameMessage: "Dealer got a Blackjack!"
+      });
+    };
+  };
 
   // Checks player bust
   bustChecker() {
@@ -136,36 +158,34 @@ export default class App extends Component {
       this.setState({
         playerPlaying: false,
         gameMessage: "You Busted!"
-      })
-    }
-  }
+      });
+    };
+  };
 
   // Determines winner of hand
   checkWinner() {
     if (this.state.dealerScore > 21) {
       this.setState({
         gameMessage: "Dealer busts, you win!"
-      })
+      });
     } else if (this.state.playerScore > this.state.dealerScore && this.state.playerScore <= 21) {
       this.setState({
         gameMessage: "You win!"
-      })
+      });
     } else if (this.state.playerScore === this.state.dealerScore) {
       this.setState({
         gameMessage: "You pushed!"
-      })
+      });
     } else {
       this.setState({
         gameMessage: "You lost!"
-      })
-    }
-  }
+      });
+    };
+  };
 
   // When player clicks HIT
   handleDrawCardEvent = event => {
-    const hand = event.target.value + "Hand";
-    const score = event.target.value + "Score";
-    if (this.state[score] < 21) {
+    if (this.state.playerScore < 21) {
       fetch(
         `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
       )
@@ -178,15 +198,15 @@ export default class App extends Component {
             });
           };
           this.setState({
-            [hand]: [...this.state[hand], json.cards[0]],
-            [score]: (this.state[score] += newValue)
+            playerHand: [...this.state.playerHand, json.cards[0]],
+            playerScore: (this.state.playerScore += newValue)
           });
           this.bustChecker();
         });
     };
   };
 
-  // When player clicks STAND
+  // When player clicks STAND, execute dealer hits less than 17
   handleStandEvent = event => {
     if (this.state.dealerScore > 21 && this.state.dealerHasAce) {
       this.setState({
@@ -194,7 +214,7 @@ export default class App extends Component {
         dealerHasAce: false
       });
     };
-
+    // Handle normal 17
     if (this.state.dealerScore < 17) {
       fetch(
         `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
@@ -212,21 +232,19 @@ export default class App extends Component {
             dealerHand: [...this.state.dealerHand, json.cards[0]],
             dealerScore: (this.state.dealerScore += newValue)
           });
-          this.handleStandEvent()
+          this.handleStandEvent();
         });
     } else {
       this.setState({
         playerPlaying: false
-      })
+      });
       this.checkWinner();
-    }
-  }
+    };
+  };
 
   // When player clicks DOUBLE DOWN
   handleDoubleDownEvent = event => {
-    const hand = event.target.value + "Hand";
-    const score = event.target.value + "Score";
-    if (this.state[score] < 21) {
+    if (this.state.playerScore < 21) {
       fetch(
         `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
       )
@@ -239,14 +257,17 @@ export default class App extends Component {
             });
           };
           this.setState({
-            [hand]: [...this.state[hand], json.cards[0]],
-            [score]: (this.state[score] += newValue),
+            playerHand: [...this.state.playerHand, json.cards[0]],
+            playerScore: (this.state.playerScore += newValue),
             playerPlaying: false
-          })
+          });
+          // Check if the double down was a bust, if it was a bust do not execute auto hits for dealer
           this.bustChecker();
-          this.handleStandEvent();
-        })
-    } 
+          if (this.state.playerScore <= 21) {
+            this.handleStandEvent();
+          };
+        });
+    };
   };
 
   // When player clicks DEAL
@@ -258,13 +279,15 @@ export default class App extends Component {
       dealerScore: 0,
       dealerInitialScore: 0,
       dealerHasAce: false,
+      dealerBlackJack: false,
       playerHand: [],
       playerScore: 0,
       playerHasAce: false,
+      playerBlackJack: false,
       gameMessage: ""
     });
-    this.handleDealHand()
-  }
+    this.handleDealHand();
+  };
 
   render() {
     return (
@@ -273,7 +296,7 @@ export default class App extends Component {
           <h1>Blackjack</h1>
           {this.state.gameStarted ? (
             <button className="lg red" onClick={() => this.handleEndGame()}>
-              End Game
+              New Deck
             </button>
           ) : (
             <button className="lg" onClick={() => this.handleDealHand()}>
@@ -307,5 +330,5 @@ export default class App extends Component {
         )}
       </div>
     );
-  }
-}
+  };
+};
