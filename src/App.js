@@ -64,14 +64,12 @@ export default class App extends Component {
           this.setState({
             playerHasAce: true
           })
-          console.log("Player has an Ace")
         }
         
         if (value1 === 11 || value3 === 11) {
           this.setState({
             dealerHasAce: true
           })
-          console.log("Dealer has an Ace")
         }
         this.setState({
           gameStarted: true,
@@ -177,19 +175,26 @@ export default class App extends Component {
           if (newValue === 11) {
             this.setState({
               playerHasAce: true
-            })
-          }
+            });
+          };
           this.setState({
             [hand]: [...this.state[hand], json.cards[0]],
             [score]: (this.state[score] += newValue)
-          })
-          this.bustChecker()
-        })
-    } 
+          });
+          this.bustChecker();
+        });
+    };
   };
 
   // When player clicks STAND
   handleStandEvent = event => {
+    if (this.state.dealerScore > 21 && this.state.dealerHasAce) {
+      this.setState({
+        dealerScore: this.state.dealerScore - 10,
+        dealerHasAce: false
+      });
+    };
+
     if (this.state.dealerScore < 17) {
       fetch(
         `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
@@ -197,6 +202,11 @@ export default class App extends Component {
         .then(res => res.json())
         .then(json => {
           const newValue = this.returnValue(json.cards[0].value);
+          if (newValue === 11) {
+            this.setState({
+              dealerHasAce: true
+            });
+          };
           this.setState({
             playerPlaying: false,
             dealerHand: [...this.state.dealerHand, json.cards[0]],
@@ -223,6 +233,11 @@ export default class App extends Component {
         .then(res => res.json())
         .then(json => {
           const newValue = this.returnValue(json.cards[0].value);
+          if (newValue === 11) {
+            this.setState({
+              playerHasAce: true
+            });
+          };
           this.setState({
             [hand]: [...this.state[hand], json.cards[0]],
             [score]: (this.state[score] += newValue),
