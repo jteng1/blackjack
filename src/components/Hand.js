@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Card from "./Card.js";
 
+import blankCard from '../images/blankCard.jpg';
+
 export default class Hand extends Component {
 
   render() {
@@ -25,8 +27,9 @@ export default class Hand extends Component {
             ) : (
                 <h5>{this.props.score}</h5>
             )}
+            <button className="sm">Surrender</button>
             {this.props.playerPlaying ? (
-                <div className="cards-container">{cards[0]}</div>
+                <div className="cards-container">{cards[0]}<img src={blankCard} alt="cardback" className="blankCard" /></div>
             ) : (
                 <div className="cards-container">{cards}</div>
             )}

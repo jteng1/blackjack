@@ -1,25 +1,21 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway|Roboto");
 
 body {
+  display: flexbox;
   background: black;
+  width: 100%;
+  height: 100%;
 }
 
 h1 {
-  font: 95px Roboto, Georgia, Times New Roman, serif;
+  font: 75px Roboto, Georgia, Times New Roman, serif;
   color: white;
   margin: 15px 0px 15px 0px;
 }
 
 h3 {
-  font: 60px Roboto, Georgia, Times New Roman, serif;
-  margin: 0px;
-  color: mediumseagreen;
+  font: 40px Roboto, Georgia, Times New Roman, serif;
   margin: 15px 0px 15px 0px;
-  }
-
-h3 {
-  font: 60px Roboto, Georgia, Times New Roman, serif;
-  margin: 0px;
   color:white;
 }
 
@@ -75,27 +71,15 @@ p {
 }
 
 .App {
+  align-items: center;
+  justify-content: center;
   font-family: sans-serif;
   text-align: center;
-  padding: 25px;
   margin: 0 auto;
 }
 
-.byline {
-  font: 12px Raleway, Arial, sans-serif;
-  color: white;
-  margin: -31px 120px 25px 0px;
-}
-
-.byline a {
-  color: white;
-  text-decoration: none;
-}
-
-
 .hands-container {
   display: grid;
-  grid-column-gap: 150px;
   grid-template-columns: auto auto;
 }
 
@@ -104,18 +88,25 @@ p {
 }
 
 .cards-container {
-  padding-top: 10px;
-  padding-right: 150px;
+  padding-top: 20px;
 }
 
 .Card {
   display: inline-block;
-  padding: 10px;
+  padding: 0px;
 }
 
 .Card img {
   border-radius: 5px;
   height: 175px;
-  width: 115px;
-  margin: 10px;
+  width: 120px;
+  margin-left: -40px; 
+}
+
+.blankCard {
+  display: inline-block;
+  border-radius: 5px;
+  height: 175px;
+  width: 120px;
+  margin-left: -50px;
 }

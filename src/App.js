@@ -147,7 +147,7 @@ export default class App extends Component {
     };
   };
 
-  // Checks player bust
+  // Checks if the player bust
   bustChecker() {
     if (this.state.playerHasAce && this.state.playerScore > 21) {
       this.setState({
@@ -212,10 +212,9 @@ export default class App extends Component {
       this.setState({
         dealerScore: this.state.dealerScore - 10,
         dealerHasAce: false
-      });
-    };
-    // Handle normal 17
-    if (this.state.dealerScore < 17) {
+      })
+      this.handleStandEvent();
+    } else if (this.state.dealerScore < 17) {
       fetch(
         `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
       )
@@ -294,6 +293,7 @@ export default class App extends Component {
       <div className="App">
         <div>
           <h1>Blackjack</h1>
+          <h3>Dealer stands on 17</h3>
           {this.state.gameStarted ? (
             <button className="lg red" onClick={() => this.handleEndGame()}>
               New Deck
@@ -303,7 +303,6 @@ export default class App extends Component {
               Start Game
             </button>
           )}
-          <h3>{this.state.gameMessage}</h3>
         </div>
         {this.state.gameStarted ? (
           <div className="hands-container">
@@ -328,6 +327,7 @@ export default class App extends Component {
         ) : (
           ""
         )}
+      <h3>{this.state.gameMessage}</h3>
       </div>
     );
   };
