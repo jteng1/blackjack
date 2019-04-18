@@ -53,7 +53,7 @@ export default class App extends Component {
     return cardValues[value];
   };
 
-  // When Start Game is clicked
+  // Handle the initial hand deal, i.e. when Start Game is clicked
   handleDealHand() {
     fetch(`https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=4`)
       .then(res => res.json())
@@ -62,12 +62,13 @@ export default class App extends Component {
         const value1 = this.returnValue(json.cards[1].value);
         const value2 = this.returnValue(json.cards[2].value);
         const value3 = this.returnValue(json.cards[3].value);
+        // Check if the player has an Ace
         if (value0 === 11 || value2 === 11) {
           this.setState({
             playerHasAce: true
           });
         };
-        
+        // Check if the dealer has an Ace
         if (value1 === 11 || value3 === 11) {
           this.setState({
             dealerHasAce: true
@@ -78,7 +79,7 @@ export default class App extends Component {
           playerPlaying: true,
           dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
           dealerScore: (this.state.dealerScore += value1 + value3),
-          dealerInitialScore:  value1,
+          dealerInitialScore:  value3,
           playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
           playerScore: (this.state.playerScore += value0 + value2)
         });
@@ -114,7 +115,7 @@ export default class App extends Component {
   // Checks for blackjack
   blackJackChecker() {
     
-    // Check for player
+    // Check for player blackjack
     if (this.returnValue(this.state.playerHand[0].value) === 10 && this.returnValue(this.state.playerHand[1].value) === 11) {
       this.setState({
         playerBlackJack: true,
@@ -130,7 +131,7 @@ export default class App extends Component {
       });
     };
 
-    // Check for dealer
+    // Check for dealer blackjack
     if (this.returnValue(this.state.dealerHand[0].value) === 10 && this.returnValue(this.state.dealerHand[1].value) === 11) {
       this.setState({
         dealerBlackJack: true,
@@ -212,7 +213,7 @@ export default class App extends Component {
       this.setState({
         dealerScore: this.state.dealerScore - 10,
         dealerHasAce: false
-      })
+      });
       this.handleStandEvent();
     } else if (this.state.dealerScore < 17) {
       fetch(

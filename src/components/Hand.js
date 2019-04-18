@@ -29,7 +29,7 @@ export default class Hand extends Component {
             )}
             <button className="sm">Surrender</button>
             {this.props.playerPlaying ? (
-                <div className="cards-container">{cards[0]}<img src={blankCard} alt="cardback" className="blankCard" /></div>
+                <div className="cards-container"><img src={blankCard} alt="cardback" className="blankCard" />{cards[1]}</div>
             ) : (
                 <div className="cards-container">{cards}</div>
             )}
@@ -53,7 +53,7 @@ export default class Hand extends Component {
                     >
                     Stand
                     </button>
-                    {this.props.cards.length == 2 ? (
+                    {this.props.cards.length === 2 ? (
                         <button
                         className="sm"
                         onClick={event => this.props.handleDoubleDownEvent(event)}
