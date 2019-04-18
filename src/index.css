@@ -32,7 +32,7 @@ h5 {
 button {
   border: none;
   outline: none;
-  border-radius: 24px;
+  border-radius: 5px;
   margin: 5px;
   background: blue;
   color: white;
