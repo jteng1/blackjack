@@ -11,13 +11,15 @@ export default class App extends Component {
       dealerHand: [],
       dealerScore: 0,
       dealerInitialScore: 0,
+      dealerHasAce: false,
       playerHand: [],
       playerScore: 0,
+      playerHasAce: false,
       gameMessage: "",
     }
   }
 
-  // Fetches deck from Deck of Cards API
+  // Fetches deck(s) from Deck of Cards API
   componentDidMount() {
     fetch(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6`)
       .then(res => res.json())
@@ -58,6 +60,19 @@ export default class App extends Component {
         const value1 = this.returnValue(json.cards[1].value);
         const value2 = this.returnValue(json.cards[2].value);
         const value3 = this.returnValue(json.cards[3].value);
+        if (value0 === 11 || value2 === 11) {
+          this.setState({
+            playerHasAce: true
+          })
+          console.log("Player has an Ace")
+        }
+        
+        if (value1 === 11 || value3 === 11) {
+          this.setState({
+            dealerHasAce: true
+          })
+          console.log("Dealer has an Ace")
+        }
         this.setState({
           gameStarted: true,
           playerPlaying: true,
@@ -86,8 +101,10 @@ export default class App extends Component {
       dealerHand: [],
       dealerScore: 0,
       dealerInitialScore: 0,
+      dealerHasAce: false,
       playerHand: [],
       playerScore: 0,
+      playerHasAce: false,
       gameMessage: ""
     });
   }
@@ -112,7 +129,12 @@ export default class App extends Component {
 
   // Checks player bust
   bustChecker() {
-    if (this.state.playerScore > 21) {
+    if (this.state.playerHasAce && this.state.playerScore > 21) {
+      this.setState({
+        playerScore: this.state.playerScore - 10,
+        playerHasAce: false
+      })
+    } else if (this.state.playerScore > 21) {
       this.setState({
         playerPlaying: false,
         gameMessage: "You Busted!"
@@ -152,6 +174,11 @@ export default class App extends Component {
         .then(res => res.json())
         .then(json => {
           const newValue = this.returnValue(json.cards[0].value);
+          if (newValue === 11) {
+            this.setState({
+              playerHasAce: true
+            })
+          }
           this.setState({
             [hand]: [...this.state[hand], json.cards[0]],
             [score]: (this.state[score] += newValue)
@@ -215,8 +242,10 @@ export default class App extends Component {
       dealerHand: [],
       dealerScore: 0,
       dealerInitialScore: 0,
+      dealerHasAce: false,
       playerHand: [],
       playerScore: 0,
+      playerHasAce: false,
       gameMessage: ""
     });
     this.handleDealHand()
