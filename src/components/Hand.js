@@ -40,7 +40,7 @@ export default class Hand extends Component {
                 <div className="playingButtons">
                     <button
                     className="sm"
-                    onClick={event => this.props.handleDrawCard(event)}
+                    onClick={event => this.props.handleDrawCardEvent(event)}
                     value={this.props.name.toLowerCase()}
                     >
                     Hit
@@ -52,6 +52,17 @@ export default class Hand extends Component {
                     >
                     Stand
                     </button>
+                    {this.props.cards.length == 2 ? (
+                        <button
+                        className="sm"
+                        onClick={event => this.props.handleDoubleDownEvent(event)}
+                        value={this.props.name.toLowerCase()}
+                        >
+                        Double Down
+                        </button>
+                    ) : (
+                        ""
+                    )};
                 </div>
             ) : (
                 <button

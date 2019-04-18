@@ -48,8 +48,8 @@ export default class App extends Component {
     return cardValues[value];
   }
 
-  // When Start Game is pressed
-  handleStartGame() {
+  // When Start Game is clicked
+  handleDealHand() {
     fetch(`https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=4`)
       .then(res => res.json())
       .then(json => {
@@ -90,6 +90,7 @@ export default class App extends Component {
     });
   }
 
+  // Checks for blackjack
   blackJackChecker() {
     if (this.returnValue(this.state.playerHand[0].value) === 10 && this.returnValue(this.state.playerHand[1].value) === 11) {
       this.setState({
@@ -107,6 +108,7 @@ export default class App extends Component {
     }
   }
 
+  // Checks player bust
   bustChecker() {
     if (this.state.playerScore > 21) {
       console.log("You Busted!")
@@ -116,10 +118,11 @@ export default class App extends Component {
     }
   }
 
+  // Determines winner of hand
   checkWinner() {
     if (this.state.dealerScore > 21) {
       console.log("Dealer busts, you win!")
-    } else if (this.state.playerScore > this.state.dealerScore) {
+    } else if (this.state.playerScore > this.state.dealerScore && this.state.playerScore <= 21) {
       console.log("You Win!")
     } else if (this.state.playerScore === this.state.dealerScore) {
       console.log("You Pushed!")
@@ -129,7 +132,7 @@ export default class App extends Component {
   }
 
   // When player clicks HIT
-  handleDrawCard = event => {
+  handleDrawCardEvent = event => {
     const hand = event.target.value + "Hand";
     const score = event.target.value + "Score";
     if (this.state[score] < 21) {
@@ -163,7 +166,6 @@ export default class App extends Component {
             dealerScore: (this.state.dealerScore += newValue)
           });
           this.handleStandEvent()
-          this.checkWinner();
         });
     } else {
       this.setState({
@@ -172,6 +174,28 @@ export default class App extends Component {
       this.checkWinner();
     }
   }
+
+  // When player clicks DOUBLE DOWN
+  handleDoubleDownEvent = event => {
+    const hand = event.target.value + "Hand";
+    const score = event.target.value + "Score";
+    if (this.state[score] < 21) {
+      fetch(
+        `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
+      )
+        .then(res => res.json())
+        .then(json => {
+          const newValue = this.returnValue(json.cards[0].value);
+          this.setState({
+            [hand]: [...this.state[hand], json.cards[0]],
+            [score]: (this.state[score] += newValue),
+            playerPlaying: false
+          })
+          this.bustChecker();
+          this.handleStandEvent();
+        })
+    } 
+  };
 
   // When player clicks DEAL
   handleDealEvent = event => {
@@ -184,7 +208,7 @@ export default class App extends Component {
       playerHand: [],
       playerScore: 0
     });
-    this.handleStartGame()
+    this.handleDealHand()
   }
 
   render() {
@@ -197,7 +221,7 @@ export default class App extends Component {
               End Game
             </button>
           ) : (
-            <button className="lg" onClick={() => this.handleStartGame()}>
+            <button className="lg" onClick={() => this.handleDealHand()}>
               Start Game
             </button>
           )}
@@ -209,9 +233,10 @@ export default class App extends Component {
               cards={this.state.playerHand}
               score={this.state.playerScore}
               playerPlaying={this.state.playerPlaying}
-              handleDrawCard={this.handleDrawCard}
+              handleDrawCardEvent={this.handleDrawCardEvent}
               handleStandEvent={this.handleStandEvent}
               handleDealEvent={this.handleDealEvent}
+              handleDoubleDownEvent={this.handleDoubleDownEvent}
             />
             <Hand
               name="Dealer"
