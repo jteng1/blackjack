@@ -12,7 +12,8 @@ export default class App extends Component {
       dealerScore: 0,
       dealerInitialScore: 0,
       playerHand: [],
-      playerScore: 0
+      playerScore: 0,
+      gameMessage: "",
     }
   }
 
@@ -86,7 +87,8 @@ export default class App extends Component {
       dealerScore: 0,
       dealerInitialScore: 0,
       playerHand: [],
-      playerScore: 0
+      playerScore: 0,
+      gameMessage: ""
     });
   }
 
@@ -95,25 +97,25 @@ export default class App extends Component {
     if (this.returnValue(this.state.playerHand[0].value) === 10 && this.returnValue(this.state.playerHand[1].value) === 11) {
       this.setState({
         playerScore: 21,
-        playerPlaying: false
+        playerPlaying: false,
+        gameMessage: "You got a Blackjack!"
       })
-      console.log("Blackjack!")
     }
     if (this.returnValue(this.state.playerHand[1].value) === 10 && this.returnValue(this.state.playerHand[0].value) === 11) {
       this.setState({
         playerScore: 21,
-        playerPlaying: false
+        playerPlaying: false,
+        gameMessage: "You got a Blackjack!"
       })
-      console.log("Blackjack!")
     }
   }
 
   // Checks player bust
   bustChecker() {
     if (this.state.playerScore > 21) {
-      console.log("You Busted!")
       this.setState({
-        playerPlaying: false
+        playerPlaying: false,
+        gameMessage: "You Busted!"
       })
     }
   }
@@ -121,13 +123,21 @@ export default class App extends Component {
   // Determines winner of hand
   checkWinner() {
     if (this.state.dealerScore > 21) {
-      console.log("Dealer busts, you win!")
+      this.setState({
+        gameMessage: "Dealer busts, you win!"
+      })
     } else if (this.state.playerScore > this.state.dealerScore && this.state.playerScore <= 21) {
-      console.log("You Win!")
+      this.setState({
+        gameMessage: "You win!"
+      })
     } else if (this.state.playerScore === this.state.dealerScore) {
-      console.log("You Pushed!")
+      this.setState({
+        gameMessage: "You pushed!"
+      })
     } else {
-      console.log("You Lost!")
+      this.setState({
+        gameMessage: "You lost!"
+      })
     }
   }
 
@@ -206,7 +216,8 @@ export default class App extends Component {
       dealerScore: 0,
       dealerInitialScore: 0,
       playerHand: [],
-      playerScore: 0
+      playerScore: 0,
+      gameMessage: ""
     });
     this.handleDealHand()
   }
@@ -225,6 +236,7 @@ export default class App extends Component {
               Start Game
             </button>
           )}
+          <h3>{this.state.gameMessage}</h3>
         </div>
         {this.state.gameStarted ? (
           <div className="hands-container">
