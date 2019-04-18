@@ -63,26 +63,54 @@ export default class App extends Component {
         const value2 = this.returnValue(json.cards[2].value);
         const value3 = this.returnValue(json.cards[3].value);
         // Check if the player has an Ace
-        if (value0 === 11 || value2 === 11) {
+        if (value0 === 11 && value2 === 11) {
           this.setState({
-            playerHasAce: true
+            gameStarted: true,
+            playerPlaying: true,
+            playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
+            playerHasAce: true,
+            playerScore: 12,
+            dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
+            dealerHasAce: false,
+            dealerScore: (this.state.dealerScore += value1 + value3),
+            dealerInitialScore: value3
+          });
+        } else if (value0 === 11 || value2 === 11) {
+          this.setState({
+            gameStarted: true,
+            playerPlaying: true,
+            playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
+            playerScore: (this.state.playerScore += value0 + value2),
+            playerHasAce: true,
+            dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
+            dealerHasAce: false,
+            dealerScore: (this.state.dealerScore += value1 + value3),
+            dealerInitialScore: value3
+          })
+        } else {
+          this.setState({
+            gameStarted: true,
+            playerPlaying: true,
+            playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
+            playerScore: (this.state.playerScore += value0 + value2),
+            dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
+            dealerHasAce: false,
+            dealerScore: (this.state.dealerScore += value1 + value3),
+            dealerInitialScore: value3
           });
         };
-        // Check if the dealer has an Ace
-        if (value1 === 11 || value3 === 11) {
+        // Check if dealer has two aces or an ace
+        if (value1 === 11 && value3 === 11) {
+          this.setState({
+            dealerHasAce: true,
+            dealerScore: 12
+          })
+        } else if (value1 === 11 || value3 === 11) {
           this.setState({
             dealerHasAce: true
-          });
-        };
-        this.setState({
-          gameStarted: true,
-          playerPlaying: true,
-          dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
-          dealerScore: (this.state.dealerScore += value1 + value3),
-          dealerInitialScore:  value3,
-          playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
-          playerScore: (this.state.playerScore += value0 + value2)
-        });
+          })
+        }
+        // After the ace checks
         this.blackJackChecker();
       });
   };
