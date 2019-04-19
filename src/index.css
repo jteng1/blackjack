@@ -58,12 +58,12 @@ button.sm {
 }
 
 button.red {
-  background:red;
+  background:rgb(100, 13, 13);
   color:white;
 }
 button.red:hover {
   background:white;
-  color: red;
+  color: rgb(100, 13, 13);
 }
 
 p {
@@ -116,4 +116,5 @@ p {
 .Stats {
   border: 1px solid white;
   color: white;
+  margin: 25px;
 }
