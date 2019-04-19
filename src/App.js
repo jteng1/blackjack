@@ -281,6 +281,7 @@ export default class App extends Component {
               playerHasAce: true
             });
           };
+          // Otherwise update player hand and player score from response
           this.setState({
             playerHand: [...this.state.playerHand, json.cards[0]],
             playerScore: (this.state.playerScore += newValue)
@@ -325,6 +326,7 @@ export default class App extends Component {
           this.handleStandEvent();
         });
     } else {
+      // Check winner because dealer did not bust and has 17 or above
       this.setState({
         playerPlaying: false
       });
@@ -341,6 +343,7 @@ export default class App extends Component {
         .then(res => res.json())
         .then(json => {
           const newValue = this.returnValue(json.cards[0].value);
+          // Check if new card is an ace
           if (newValue === 11) {
             this.setState({
               playerHasAce: true
@@ -360,7 +363,7 @@ export default class App extends Component {
     };
   };
 
-  // When player clicks DEAL
+  // When player clicks DEAL reset the hand states but not the game states
   handleDealEvent = event => {
     this.setState({
       playerPlaying: false,

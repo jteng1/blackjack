@@ -18,7 +18,7 @@ export default class Hand extends Component {
     }
 
     return (
-      <div className={this.props.name + " Hand"}>
+      <div className="Hand">
         {this.props.name === "Dealer" ? (
           <div>
             <h3>{this.props.name}</h3>
@@ -36,7 +36,7 @@ export default class Hand extends Component {
             
           </div>
           ) : (
-            <div>
+            <div className="hand-container">
             <h3>{this.props.name}</h3>
             <h5>{this.props.score}</h5>
             {this.props.playerPlaying ? (
