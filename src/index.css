@@ -7,6 +7,7 @@ body {
   background: black;
   width: 100%;
   height: 100%;
+  text-transform: uppercase;
 }
 
 p {
@@ -37,6 +38,7 @@ button {
   outline: none;
   border-radius: 5px;
   margin: 5px;
+  text-transform: uppercase;
   background: blue;
   color: white;
   font-weight: bold;
@@ -94,7 +96,7 @@ button.red:hover {
 
 /* Card Component */
 .cards-container {
-  padding-top: 20px;
+  padding: 20px;
 }
 
 .Card {
@@ -108,15 +110,15 @@ button.red:hover {
   height: 175px;
   width: 120px;
   margin-left: -80px;
-   
 }
 
 .blankCard {
   display: inline-block;
-  border-radius: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
   height: 175px;
   width: 120px;
-  margin-left: -50px;
+  margin-left: -80px;
 }
 
 /* Stats Component*/

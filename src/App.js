@@ -69,10 +69,12 @@ export default class App extends Component {
     fetch(`https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=4`)
       .then(res => res.json())
       .then(json => {
+        // Return blackjack values of json card values
         const value0 = this.returnValue(json.cards[0].value);
         const value1 = this.returnValue(json.cards[1].value);
         const value2 = this.returnValue(json.cards[2].value);
         const value3 = this.returnValue(json.cards[3].value);
+
         // Check if the player has two Aces first or just an Ace, or else set default state 
         if (value0 === 11 && value2 === 11) {
           this.setState({
@@ -241,12 +243,12 @@ export default class App extends Component {
       this.setState({
         playerWins: this.state.playerWins + 1,
         dealerBusts: this.state.dealerBusts + 1,
-        gameMessage: "Dealer busts, you win!"
+        gameMessage: "Dealer busts, you won!"
       });
     } else if (this.state.playerScore > this.state.dealerScore && this.state.playerScore <= 21) {
       this.setState({
         playerWins: this.state.playerWins + 1,
-        gameMessage: "You win!"
+        gameMessage: "You won!"
       });
     } else if (this.state.playerScore === this.state.dealerScore) {
       this.setState({

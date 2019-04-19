@@ -11,8 +11,8 @@ export default class Stats extends Component {
     return (
       <div className="stats-container">
         <div className="playerStats">
-            <p>Player Win(s): {this.props.playerWins}</p>
-            <p>Player Win Percent: {playerWinPercent ? (playerWinPercent) : ("0")}%</p>
+            <p>Player Wins: {this.props.playerWins}</p>
+            <p>Player Win Percentage: {playerWinPercent ? (playerWinPercent) : ("0")}%</p>
             <p>Player Blackjacks: {this.props.playerBlackjacks}</p>
             <p>Player Busts: {this.props.playerBusts}</p>
         </div>
@@ -21,8 +21,8 @@ export default class Stats extends Component {
             <p>Total Hands: {totalHands}</p>
         </div>
         <div className="dealerStats">
-            <p>Dealer Win(s): {this.props.dealerWins}</p>
-            <p>Dealer Win Percent: {dealerWinPercent ? (dealerWinPercent) : ("0")}%</p>
+            <p>Dealer Wins: {this.props.dealerWins}</p>
+            <p>Dealer Win Percentage: {dealerWinPercent ? (dealerWinPercent) : ("0")}%</p>
             <p>Dealer Blackjacks: {this.props.dealerBlackjacks}</p>
             <p>Dealer Busts: {this.props.dealerBusts}</p>
         </div>
