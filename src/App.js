@@ -387,7 +387,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <div>
+        <div className="gameHeader">
           <h1>Blackjack</h1>
           <h3>Dealer stands on 17</h3>
           {this.state.gameStarted ? (
