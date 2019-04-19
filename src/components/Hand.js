@@ -27,7 +27,10 @@ export default class Hand extends Component {
             ) : (
                 <h5>{this.props.score}</h5>
             )}
-            <button className="sm">Surrender</button>
+            <button 
+            className="sm"
+            >
+            Surrender</button>
             {this.props.playerPlaying ? (
                 <div className="cards-container"><img src={blankCard} alt="cardback" className="blankCard" />{cards[1]}</div>
             ) : (
@@ -59,6 +62,16 @@ export default class Hand extends Component {
                         onClick={event => this.props.handleDoubleDownEvent(event)}
                         >
                         Double Down
+                        </button>
+                    ) : (
+                        ""
+                    )};
+                    {this.props.playerSplit ? (
+                        <button
+                        className="sm"
+                        onClick={event => this.props.handleSplitEvent(event)}
+                        >
+                            Split
                         </button>
                     ) : (
                         ""

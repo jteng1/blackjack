@@ -3,20 +3,29 @@
 This is my personal recreation of a blackjack application bootstrapped with create-react-app. It was created from scratch with only React and pulls cards from
 the Deck of Cards API.
 
+## Rules
+Dealer stands on 17<br />
+Push on both player and dealer blackjacks<br />
+Six decks in the shoe<br />
+
 ## Installing the app
 
-Clone the repo into a directory_
-npm init_
-npm start_
-localhost:3000_
+Clone this repo into a directory<br />
+cd directory<br />
+npm init<br />
+npm start<br />
+application will run on localhost:3000<br />
 
 ## Versions
 
-1.0.0 - Added functionality for game
+1.0.0 - Added functionality for game<br />
 
 ## In Progress
 
-Adding a betting system/chip system_
-Redo the UI/UX for application_
-Add split functionality_
-Add deck count/customization_
+Adding a betting system/chip system<br />
+Redo the UI/UX for application<br />
+Add split functionality<br />
+Add insurance option<br />
+Add deck count/customization<br />
+Add high score<br />
+Make responsive<br />

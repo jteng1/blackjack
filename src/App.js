@@ -20,6 +20,7 @@ export default class App extends Component {
       playerScore: 0,
       playerHasAce: false,
       playerHasBlackjack: false,
+      playerSplit: false,
       // Game Statistics
       playerWins: 0,
       dealerWins: 0,
@@ -82,6 +83,7 @@ export default class App extends Component {
             playerPlaying: true,
             playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
             playerHasAce: true,
+            playerSplit: true,
             playerScore: 12,
             dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
             dealerHasAce: false,
@@ -100,6 +102,18 @@ export default class App extends Component {
             dealerScore: (this.state.dealerScore += value1 + value3),
             dealerInitialScore: value3
           })
+        } else if (value0 === value2) {
+          this.setState({
+            gameStarted: true,
+            playerPlaying: true,
+            playerSplit: true,
+            playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
+            playerScore: (this.state.playerScore += value0 + value2),
+            dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
+            dealerHasAce: false,
+            dealerScore: (this.state.dealerScore += value1 + value3),
+            dealerInitialScore: value3
+          });
         } else {
           this.setState({
             gameStarted: true,
@@ -158,6 +172,7 @@ export default class App extends Component {
       playerScore: 0,
       playerHasAce: false,
       playerHasBlackjack: false,
+      playerSplit: false,
       // Game Statistics
       playerWins: 0,
       dealerWins: 0,
@@ -276,17 +291,20 @@ export default class App extends Component {
           if (newValue === 11 && this.state.playerHasAce) {
             this.setState({
               playerScore: this.state.playerScore - 10,
-              playerHasAce: true
+              playerHasAce: true,
+              playerSplit: false
             });
           } else if (newValue === 11) {
             this.setState({
-              playerHasAce: true
+              playerHasAce: true,
+              playerSplit: false
             });
           };
           // Otherwise update player hand and player score from response
           this.setState({
             playerHand: [...this.state.playerHand, json.cards[0]],
-            playerScore: (this.state.playerScore += newValue)
+            playerScore: (this.state.playerScore += newValue),
+            playerSplit: false
           });
           this.bustChecker();
         });
@@ -365,6 +383,13 @@ export default class App extends Component {
     };
   };
 
+  // When player clicks SPLIT
+  handleSplitEvent = event => {
+    this.setState({
+      dealerSplit: false,
+    });
+  };
+
   // When player clicks DEAL reset the hand states but not the game states
   handleDealEvent = event => {
     this.setState({
@@ -379,6 +404,7 @@ export default class App extends Component {
       playerScore: 0,
       playerHasAce: false,
       playerHasBlackjack: false,
+      playerSplit: false,
       gameMessage: ""
     });
     this.handleDealHand();
@@ -418,6 +444,8 @@ export default class App extends Component {
               cards={this.state.playerHand}
               score={this.state.playerScore}
               playerPlaying={this.state.playerPlaying}
+              playerSplit={this.state.playerSplit}
+              handleSplitEvent={this.handleSplitEvent}
               handleDrawCardEvent={this.handleDrawCardEvent}
               handleStandEvent={this.handleStandEvent}
               handleDealEvent={this.handleDealEvent}
