@@ -112,3 +112,8 @@ p {
   width: 120px;
   margin-left: -50px;
 }
+
+.Stats {
+  border: 1px solid white;
+  color: white;
+}

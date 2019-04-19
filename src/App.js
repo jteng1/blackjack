@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import Hand from "./components/Hand.js";
+import Stats from "./components/Stats.js";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
+    // Set the initial state of the application
     this.state = {
       gameStarted: false,
       playerPlaying: false,
@@ -17,7 +19,11 @@ export default class App extends Component {
       playerScore: 0,
       playerHasAce: false,
       playerBlackJack: false,
-      gameMessage: "",
+      // Game Statistics
+      playerWins: 0,
+      dealerWins: 0,
+      pushes: 0,
+      gameMessage: ""
     };
   };
 
@@ -62,7 +68,7 @@ export default class App extends Component {
         const value1 = this.returnValue(json.cards[1].value);
         const value2 = this.returnValue(json.cards[2].value);
         const value3 = this.returnValue(json.cards[3].value);
-        // Check if the player has an Ace
+        // Check if the player has two Aces first or just an Ace, or else set default state 
         if (value0 === 11 && value2 === 11) {
           this.setState({
             gameStarted: true,
@@ -115,7 +121,7 @@ export default class App extends Component {
       });
   };
 
-  // When End Game is pressed a new deck is drawn
+  // When End Game is pressed a new deck is drawn, reset state to initial state
   handleEndGame() {
     fetch(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6`)
     .then(res => res.json())
@@ -136,6 +142,10 @@ export default class App extends Component {
       playerScore: 0,
       playerHasAce: false,
       playerBlackJack: false,
+      // Game Statistics
+      playerWins: 0,
+      dealerWins: 0,
+      pushes: 0,
       gameMessage: ""
     });
   };
@@ -148,14 +158,11 @@ export default class App extends Component {
       this.setState({
         playerBlackJack: true,
         playerPlaying: false,
-        gameMessage: "You got a Blackjack!"
       });
-    };
-    if (this.returnValue(this.state.playerHand[1].value) === 10 && this.returnValue(this.state.playerHand[0].value) === 11) {
+    } else if (this.returnValue(this.state.playerHand[1].value) === 10 && this.returnValue(this.state.playerHand[0].value) === 11) {
       this.setState({
         playerBlackJack: true,
         playerPlaying: false,
-        gameMessage: "You got a Blackjack!"
       });
     };
 
@@ -164,14 +171,29 @@ export default class App extends Component {
       this.setState({
         dealerBlackJack: true,
         playerPlaying: false,
-        gameMessage: "Dealer got a Blackjack!"
       });
-    };
-    if (this.returnValue(this.state.dealerHand[1].value) === 10 && this.returnValue(this.state.dealerHand[0].value) === 11) {
+    } else if (this.returnValue(this.state.dealerHand[1].value) === 10 && this.returnValue(this.state.dealerHand[0].value) === 11) {
       this.setState({
         dealerBlackJack: true,
         playerPlaying: false,
-        gameMessage: "Dealer got a Blackjack!"
+      });
+    };
+
+    // Check who has blackjacks
+    if (this.state.playerBlackJack && this.state.dealerBlackJack) {
+      this.setState({
+        pushes: this.state.pushes + 1,
+        gameMessage: "Push! You both have a Blackjack!"
+      });
+    } else if (this.state.playerBlackJack) {
+      this.setState({
+        playerWins: this.state.playerWins + 1,
+        gameMessage: "Blackjack!"
+      });
+    } else if (this.state.dealerBlackJack) {
+      this.setState({
+        dealerWins: this.state.dealerWins + 1,
+        gameMessage: "Dealer has a Blackjack!"
       });
     };
   };
@@ -186,6 +208,7 @@ export default class App extends Component {
     } else if (this.state.playerScore > 21) {
       this.setState({
         playerPlaying: false,
+        dealerWins: this.state.dealerWins + 1,
         gameMessage: "You Busted!"
       });
     };
@@ -195,18 +218,22 @@ export default class App extends Component {
   checkWinner() {
     if (this.state.dealerScore > 21) {
       this.setState({
+        playerWins: this.state.playerWins + 1,
         gameMessage: "Dealer busts, you win!"
       });
     } else if (this.state.playerScore > this.state.dealerScore && this.state.playerScore <= 21) {
       this.setState({
+        playerWins: this.state.playerWins + 1,
         gameMessage: "You win!"
       });
     } else if (this.state.playerScore === this.state.dealerScore) {
       this.setState({
+        pushes: this.state.pushes + 1,
         gameMessage: "You pushed!"
       });
     } else {
       this.setState({
+        dealerWins: this.state.dealerWins + 1,
         gameMessage: "You lost!"
       });
     };
@@ -237,6 +264,7 @@ export default class App extends Component {
 
   // When player clicks STAND, execute dealer hits less than 17
   handleStandEvent = event => {
+    // If the dealer has an ace and is greater than 21, subtract 10 and set the ace flag to false, recursively call itself
     if (this.state.dealerScore > 21 && this.state.dealerHasAce) {
       this.setState({
         dealerScore: this.state.dealerScore - 10,
@@ -357,6 +385,11 @@ export default class App extends Component {
           ""
         )}
       <h3>{this.state.gameMessage}</h3>
+      <Stats 
+        playerWins={this.state.playerWins}
+        dealerWins={this.state.dealerWins}
+        pushes={this.state.pushes}
+      />
       </div>
     );
   };
