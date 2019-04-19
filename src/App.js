@@ -26,6 +26,8 @@ export default class App extends Component {
       pushes: 0,
       playerBlackjacks: 0,
       dealerBlackjacks: 0,
+      playerBusts: 0,
+      dealerBusts: 0,
       gameMessage: ""
     };
   };
@@ -160,6 +162,8 @@ export default class App extends Component {
       pushes: 0,
       playerBlackjacks: 0,
       dealerBlackjacks: 0,
+      playerBusts: 0,
+      dealerBusts: 0,
       gameMessage: ""
     });
   };
@@ -214,7 +218,7 @@ export default class App extends Component {
     };
   };
 
-  // Checks if the player bust
+  // Checks if the player bust, if there is an ace in hand subtract 10 and set playerHasAce to false
   bustChecker() {
     if (this.state.playerHasAce && this.state.playerScore > 21) {
       this.setState({
@@ -225,6 +229,7 @@ export default class App extends Component {
       this.setState({
         playerPlaying: false,
         dealerWins: this.state.dealerWins + 1,
+        playerBusts: this.state.playerBusts + 1,
         gameMessage: "You Busted!"
       });
     };
@@ -235,6 +240,7 @@ export default class App extends Component {
     if (this.state.dealerScore > 21) {
       this.setState({
         playerWins: this.state.playerWins + 1,
+        dealerBusts: this.state.dealerBusts + 1,
         gameMessage: "Dealer busts, you win!"
       });
     } else if (this.state.playerScore > this.state.dealerScore && this.state.playerScore <= 21) {
@@ -264,7 +270,13 @@ export default class App extends Component {
         .then(res => res.json())
         .then(json => {
           const newValue = this.returnValue(json.cards[0].value);
-          if (newValue === 11) {
+          // Handle if player hits multiple aces
+          if (newValue === 11 && this.state.playerHasAce) {
+            this.setState({
+              playerScore: this.state.playerScore - 10,
+              playerHasAce: true
+            });
+          } else if (newValue === 11) {
             this.setState({
               playerHasAce: true
             });
@@ -294,7 +306,13 @@ export default class App extends Component {
         .then(res => res.json())
         .then(json => {
           const newValue = this.returnValue(json.cards[0].value);
-          if (newValue === 11) {
+          // Handle if dealer hits multiple aces
+          if (newValue === 11 && this.state.dealerHasAce) {
+            this.setState({
+              dealerScore: this.state.dealerScore - 10,
+              dealerHasAce: true
+            });
+          } else if (newValue === 11) {
             this.setState({
               dealerHasAce: true
             });
@@ -345,13 +363,13 @@ export default class App extends Component {
   // When player clicks DEAL
   handleDealEvent = event => {
     this.setState({
-      gameStarted: false,
       playerPlaying: false,
       dealerHand: [],
       dealerScore: 0,
       dealerInitialScore: 0,
       dealerHasAce: false,
       dealerHasBlackjack: false,
+      insurance: false,
       playerHand: [],
       playerScore: 0,
       playerHasAce: false,
@@ -377,6 +395,8 @@ export default class App extends Component {
               dealerWins={this.state.dealerWins}
               playerBlackjacks={this.state.playerBlackjacks}
               dealerBlackjacks={this.state.dealerBlackjacks}
+              playerBusts={this.state.playerBusts}
+              dealerBusts={this.state.dealerBusts}
               pushes={this.state.pushes}
               />
             </div>

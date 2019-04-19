@@ -1,10 +1,16 @@
+/* Import fonts */
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 
+/* Body and Heading Styles */
 body {
   display: flexbox;
   background: black;
   width: 100%;
   height: 100%;
+}
+
+p {
+  margin: 0;
 }
 
 h1 {
@@ -25,6 +31,7 @@ h5 {
   color: white;
 }
 
+/* Button Styles */
 button {
   border: none;
   outline: none;
@@ -66,10 +73,7 @@ button.red:hover {
   color: rgb(100, 13, 13);
 }
 
-p {
-  margin: 0;
-}
-
+/* App Component */
 .App {
   align-items: center;
   justify-content: center;
@@ -78,6 +82,7 @@ p {
   margin: 0 auto;
 }
 
+/* Hands Component */
 .hands-container {
   display: grid;
   grid-template-columns: auto auto;
@@ -87,6 +92,7 @@ p {
   margin: 25px;
 }
 
+/* Card Component */
 .cards-container {
   padding-top: 20px;
 }
@@ -113,8 +119,23 @@ p {
   margin-left: -50px;
 }
 
-.Stats {
+/* Stats Component*/
+.stats-container {
+  display: flex;
   border: 1px solid white;
   color: white;
   margin: 25px;
+}
+
+.playerStats {
+  padding: 15px;
+  flex: 33.3333%;
+}
+.gameStats {
+  padding: 15px;
+  flex: 33.3333%;
+}
+.dealerStats {
+  padding: 15px;
+  flex: 33.3333%;
 }

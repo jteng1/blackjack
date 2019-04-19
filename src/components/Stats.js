@@ -6,16 +6,26 @@ export default class Stats extends Component {
 
     var totalHands = this.props.playerWins + this.props.dealerWins + this.props.pushes;
     var playerWinPercent = Math.floor(this.props.playerWins/totalHands*100);
+    var dealerWinPercent = Math.floor(this.props.dealerWins/totalHands*100);
 
     return (
-      <div className="Stats">
-        <p>Player Win(s): {this.props.playerWins}</p>
-        <p>Player Win Percent: {playerWinPercent ? (playerWinPercent) : ("0")}%</p>
-        <p>Player Blackjacks: {this.props.playerBlackjacks}</p>
-        <p>Dealer Win(s): {this.props.dealerWins}</p>
-        <p>Dealer Blackjacks: {this.props.dealerBlackjacks}</p>
-        <p>Pushes: {this.props.pushes}</p>
-        <p>Total Hands: {totalHands}</p>
+      <div className="stats-container">
+        <div className="playerStats">
+            <p>Player Win(s): {this.props.playerWins}</p>
+            <p>Player Win Percent: {playerWinPercent ? (playerWinPercent) : ("0")}%</p>
+            <p>Player Blackjacks: {this.props.playerBlackjacks}</p>
+            <p>Player Busts: {this.props.playerBusts}</p>
+        </div>
+        <div className="gameStats">
+            <p>Pushes: {this.props.pushes}</p>
+            <p>Total Hands: {totalHands}</p>
+        </div>
+        <div className="dealerStats">
+            <p>Dealer Win(s): {this.props.dealerWins}</p>
+            <p>Dealer Win Percent: {dealerWinPercent ? (dealerWinPercent) : ("0")}%</p>
+            <p>Dealer Blackjacks: {this.props.dealerBlackjacks}</p>
+            <p>Dealer Busts: {this.props.dealerBusts}</p>
+        </div>
       </div>
     );
   }
