@@ -149,3 +149,8 @@ button.red:hover {
   color: white;
   margin: 25px;
 }
+
+.chipStats {
+  flex: 100%;
+  padding: 15px;
+}

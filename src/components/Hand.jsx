@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Card from "./Card.js";
+import Card from "./Card.jsx";
 
 import blankCard from '../images/blankCard.jpg';
 

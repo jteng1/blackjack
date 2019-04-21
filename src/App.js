@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Hand from "./components/Hand.js";
-import Stats from "./components/Stats.js";
+import Hand from "./components/Hand.jsx";
+import Stats from "./components/Stats.jsx";
 import Chips from "./components/Chips.jsx";
 
 export default class App extends Component {
@@ -37,7 +37,7 @@ export default class App extends Component {
       // Betting options and flags
       playerChips: 1000,
       betAmount: 20,
-
+      chipsInPlay: 0
     };
   };
 
@@ -52,7 +52,7 @@ export default class App extends Component {
       });
   };
 
-  // Return blackjack value of input card value 
+  // Return corresponding blackjack value from input card value 
   returnValue(value) {
     const cardValues = {
       ACE: 11,
@@ -75,6 +75,14 @@ export default class App extends Component {
 
   // Handle the initial hand deal, i.e. when Start Game is clicked
   handleDealHand() {
+
+    // Deal with initial betting
+    this.setState({
+      playerChips: this.state.playerChips - this.state.betAmount,
+      chipsInPlay: this.state.betAmount,
+    })
+    
+    // Draw 4 cards from the deck
     fetch(`https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=4`)
       .then(res => res.json())
       .then(json => {
@@ -109,7 +117,7 @@ export default class App extends Component {
             dealerHasAce: false,
             dealerScore: (this.state.dealerScore += value1 + value3),
             dealerInitialScore: value3
-          })
+          });
         } else if (value0 === value2) {
           this.setState({
             gameStarted: true,
@@ -151,11 +159,12 @@ export default class App extends Component {
         } else if (value1 === 11 || value3 === 11) {
           this.setState({
             dealerHasAce: true
-          })
-        }
+          });
+        };
         // After the ace checks
         this.blackJackChecker();
       });
+      
   };
 
   // When End Game is pressed a new deck is drawn, reset state to initial state
@@ -189,7 +198,11 @@ export default class App extends Component {
       dealerBlackjacks: 0,
       playerBusts: 0,
       dealerBusts: 0,
-      gameMessage: ""
+      gameMessage: "",
+      // Betting options and flags
+      playerChips: 1000,
+      betAmount: 20,
+      chipsInPlay: 0
     });
   };
 
@@ -199,45 +212,49 @@ export default class App extends Component {
     // Check for player blackjack
     if (this.returnValue(this.state.playerHand[0].value) === 10 && this.returnValue(this.state.playerHand[1].value) === 11) {
       this.setState({
-        playerHasBlackjack: true,
-        playerPlaying: false,
+        playerHasBlackjack: true
       });
     } else if (this.returnValue(this.state.playerHand[1].value) === 10 && this.returnValue(this.state.playerHand[0].value) === 11) {
       this.setState({
-        playerHasBlackjack: true,
-        playerPlaying: false,
+        playerHasBlackjack: true
       });
     };
 
     // Check for dealer blackjack
     if (this.returnValue(this.state.dealerHand[0].value) === 10 && this.returnValue(this.state.dealerHand[1].value) === 11) {
       this.setState({
-        dealerHasBlackjack: true,
-        playerPlaying: false,
+        dealerHasBlackjack: true
       });
     } else if (this.returnValue(this.state.dealerHand[1].value) === 10 && this.returnValue(this.state.dealerHand[0].value) === 11) {
       this.setState({
-        dealerHasBlackjack: true,
-        playerPlaying: false,
+        dealerHasBlackjack: true
       });
     };
 
-    // Check who has blackjacks
+    // Check who has blackjacks and award chips accordingly
     if (this.state.playerHasBlackjack && this.state.dealerHasBlackjack) {
       this.setState({
+        playerPlaying: false,
         pushes: this.state.pushes + 1,
-        gameMessage: "Push! You both have a Blackjack!"
+        playerChips: this.state.playerChips + this.state.chipsInPlay,
+        chipsInPlay: 0,
+        gameMessage: "Push! You both have a Blackjack!",
       });
     } else if (this.state.playerHasBlackjack) {
       this.setState({
+        playerPlaying: false,
         playerWins: this.state.playerWins + 1,
         playerBlackjacks: this.state.playerBlackjacks + 1,
+        playerChips: this.state.playerChips + (3 * this.state.chipsInPlay)/2,
+        chipsInPlay: 0,
         gameMessage: "Blackjack!"
       });
     } else if (this.state.dealerHasBlackjack) {
       this.setState({
+        playerPlaying: false,
         dealerWins: this.state.dealerWins + 1,
         dealerBlackjacks: this.state.dealerBlackjacks + 1,
+        chipsInPlay: 0,
         gameMessage: "Dealer has a Blackjack!"
       });
     };
@@ -255,6 +272,7 @@ export default class App extends Component {
         playerPlaying: false,
         dealerWins: this.state.dealerWins + 1,
         playerBusts: this.state.playerBusts + 1,
+        chipsInPlay: 0,
         gameMessage: "You Busted!"
       });
     };
@@ -264,23 +282,38 @@ export default class App extends Component {
   checkWinner() {
     if (this.state.dealerScore > 21) {
       this.setState({
+        // Set statistics
         playerWins: this.state.playerWins + 1,
         dealerBusts: this.state.dealerBusts + 1,
+        // Set chips, 2 times chips in play if you win
+        playerChips: this.state.playerChips + 2 * this.state.chipsInPlay,
+        chipsInPlay: 0,
         gameMessage: "Dealer busts, you won!"
       });
     } else if (this.state.playerScore > this.state.dealerScore && this.state.playerScore <= 21) {
       this.setState({
+        // Set statistics
         playerWins: this.state.playerWins + 1,
+        // Set chips, 2 times chips in play if you win
+        playerChips: this.state.playerChips + 2 * this.state.chipsInPlay,
+        chipsInPlay: 0,
         gameMessage: "You won!"
       });
     } else if (this.state.playerScore === this.state.dealerScore) {
       this.setState({
+        // Set statistics
         pushes: this.state.pushes + 1,
+        // Set chips, return original chips in play if push
+        playerChips: this.state.playerChips + this.state.chipsInPlay,
+        chipsInPlay: 0,
         gameMessage: "You pushed!"
       });
     } else {
       this.setState({
+        // Set statistics
         dealerWins: this.state.dealerWins + 1,
+        // Set chips
+        chipsInPlay: 0,
         gameMessage: "You lost!"
       });
     };
@@ -473,6 +506,7 @@ export default class App extends Component {
       <Chips 
         playerChips={this.state.playerChips}
         betAmount={this.state.betAmount}
+        chipsInPlay={this.state.chipsInPlay}
       />  
       <h3>{this.state.gameMessage}</h3>
       </div>
