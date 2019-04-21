@@ -37,7 +37,8 @@ export default class App extends Component {
       // Betting options and flags
       playerChips: 1000,
       betAmount: 20,
-      chipsInPlay: 0
+      chipsInPlay: 0,
+      winAmount: 0
     };
   };
 
@@ -78,8 +79,10 @@ export default class App extends Component {
 
     // Deal with initial betting
     this.setState({
+      betAmount: 20,
       playerChips: this.state.playerChips - this.state.betAmount,
       chipsInPlay: this.state.betAmount,
+      winAmount: 0,
     })
     
     // Draw 4 cards from the deck
@@ -202,7 +205,8 @@ export default class App extends Component {
       // Betting options and flags
       playerChips: 1000,
       betAmount: 20,
-      chipsInPlay: 0
+      chipsInPlay: 0,
+      winAmount: 0
     });
   };
 
@@ -287,6 +291,7 @@ export default class App extends Component {
         dealerBusts: this.state.dealerBusts + 1,
         // Set chips, 2 times chips in play if you win
         playerChips: this.state.playerChips + 2 * this.state.chipsInPlay,
+        winAmount: this.state.chipsInPlay,
         chipsInPlay: 0,
         gameMessage: "Dealer busts, you won!"
       });
@@ -296,8 +301,9 @@ export default class App extends Component {
         playerWins: this.state.playerWins + 1,
         // Set chips, 2 times chips in play if you win
         playerChips: this.state.playerChips + 2 * this.state.chipsInPlay,
+        winAmount: this.state.chipsInPlay,
         chipsInPlay: 0,
-        gameMessage: "You won!"
+        gameMessage: `You won!`
       });
     } else if (this.state.playerScore === this.state.dealerScore) {
       this.setState({
@@ -467,21 +473,18 @@ export default class App extends Component {
               <button className="lg red" onClick={() => this.handleEndGame()}>
                 New Deck
               </button>
-              <Stats 
-              playerWins={this.state.playerWins}
-              dealerWins={this.state.dealerWins}
-              playerBlackjacks={this.state.playerBlackjacks}
-              dealerBlackjacks={this.state.dealerBlackjacks}
-              playerBusts={this.state.playerBusts}
-              dealerBusts={this.state.dealerBusts}
-              pushes={this.state.pushes}
-              />
             </div>
           ) : (
             <button className="lg" onClick={() => this.handleDealHand()}>
               Start Game
             </button>
           )}
+          <Chips 
+            playerChips={this.state.playerChips}
+            betAmount={this.state.betAmount}
+            chipsInPlay={this.state.chipsInPlay}
+            winAmount={this.state.winAmount}
+          />  
         </div>
         {this.state.gameStarted ? (
           <div className="hands-container">
@@ -508,11 +511,15 @@ export default class App extends Component {
         ) : (
           ""
         )}
-      <Chips 
-        playerChips={this.state.playerChips}
-        betAmount={this.state.betAmount}
-        chipsInPlay={this.state.chipsInPlay}
-      />  
+      <Stats 
+        playerWins={this.state.playerWins}
+        dealerWins={this.state.dealerWins}
+        playerBlackjacks={this.state.playerBlackjacks}
+        dealerBlackjacks={this.state.dealerBlackjacks}
+        playerBusts={this.state.playerBusts}
+        dealerBusts={this.state.dealerBusts}
+        pushes={this.state.pushes}
+      />
       <h3>{this.state.gameMessage}</h3>
       </div>
     )

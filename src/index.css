@@ -15,19 +15,19 @@ p {
 }
 
 h1 {
-  font: 75px Roboto, Georgia, Times New Roman, serif;
+  font: 45px Roboto, Georgia, Times New Roman, serif;
   color: white;
   margin: 15px 0px 15px 0px;
 }
 
 h3 {
-  font: 40px Roboto, Georgia, Times New Roman, serif;
+  font: 30px Roboto, Georgia, Times New Roman, serif;
   margin: 15px 0px 15px 0px;
   color:white;
 }
 
 h5 {
-  font: 50px Roboto, Georgia, Times New Roman, serif;
+  font: 30px Roboto, Georgia, Times New Roman, serif;
   margin: 15px;
   color: white;
 }
