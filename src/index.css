@@ -121,7 +121,7 @@ button.red:hover {
   margin-left: -80px;
 }
 
-/* Stats Component*/
+/* Stats Component */
 .stats-container {
   display: flex;
   border: 1px solid white;
@@ -140,4 +140,12 @@ button.red:hover {
 .dealerStats {
   padding: 15px;
   flex: 33.3333%;
+}
+
+/* Chips Component */
+.chips-container {
+  display: flex;
+  border: 1px solid white;
+  color: white;
+  margin: 25px;
 }

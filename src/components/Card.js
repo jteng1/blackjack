@@ -13,6 +13,6 @@ export default class Card extends Component {
       <div className="Card">
         <img src={this.state.image} alt="Card" />
       </div>
-    );
+    )
   }
 }

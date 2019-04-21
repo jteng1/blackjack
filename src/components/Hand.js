@@ -15,7 +15,7 @@ export default class Hand extends Component {
           history={this.props.history}
         />
       ));
-    }
+    };
 
     return (
       <div className="Hand">
@@ -27,68 +27,63 @@ export default class Hand extends Component {
             ) : (
                 <h5>{this.props.score}</h5>
             )}
-            <button 
-            className="sm"
-            >
-            Surrender</button>
             {this.props.playerPlaying ? (
                 <div className="cards-container"><img src={blankCard} alt="cardback" className="blankCard" />{cards[1]}</div>
             ) : (
-                <div className="cards-container">{cards}</div>
+                <div className="cards-container">{cards}</div> 
             )}
-            
           </div>
           ) : (
             <div className="hand-container">
-            <h3>{this.props.name}</h3>
-            <h5>{this.props.score}</h5>
-            {this.props.playerPlaying ? (
-                <div className="playingButtons">
-                    <button
-                    className="sm"
-                    onClick={event => this.props.handleDrawCardEvent(event)}
-                    >
-                    Hit
-                    </button>
-                    <button
-                    className="sm"
-                    onClick={event => this.props.handleStandEvent(event)}
-                    >
-                    Stand
-                    </button>
-                    {this.props.cards.length === 2 ? (
+                <h3>{this.props.name}</h3>
+                <h5>{this.props.score}</h5>
+                <div className="cards-container">{cards}</div>
+                {this.props.playerPlaying ? (
+                    <div className="playingButtons">
                         <button
                         className="sm"
-                        onClick={event => this.props.handleDoubleDownEvent(event)}
+                        onClick={event => this.props.handleDrawCardEvent(event)}
                         >
-                        Double Down
+                        Hit
                         </button>
-                    ) : (
-                        ""
-                    )};
-                    {this.props.playerSplit ? (
                         <button
                         className="sm"
-                        onClick={event => this.props.handleSplitEvent(event)}
+                        onClick={event => this.props.handleStandEvent(event)}
                         >
+                        Stand
+                        </button>
+                        {this.props.cards.length === 2 ? (
+                            <button
+                            className="sm"
+                            onClick={event => this.props.handleDoubleDownEvent(event)}
+                            >
+                            Double Down
+                            </button>
+                        ) : (
+                            ""
+                        )}
+                        {this.props.playerSplittable ? (
+                            <button
+                            className="sm"
+                            onClick={event => this.props.handleSplitEvent(event)}
+                            >
                             Split
-                        </button>
-                    ) : (
-                        ""
-                    )};
+                            </button>
+                        ) : (
+                            ""
+                        )}
+                    </div>
+                ) : (
+                    <button
+                    className="sm"
+                    onClick={event => this.props.handleDealEvent(event)}
+                    >
+                    Deal
+                    </button>
+                )}
                 </div>
-            ) : (
-                <button
-                className="sm"
-                onClick={event => this.props.handleDealEvent(event)}
-                >
-                Deal
-                </button>
             )}
-            <div className="cards-container">{cards}</div>
-            </div>
-          )}
       </div>
-    );
+    )
   }
 }

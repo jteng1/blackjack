@@ -1,26 +1,30 @@
 import React, { Component } from "react";
 import Hand from "./components/Hand.js";
 import Stats from "./components/Stats.js";
+import Chips from "./components/Chips.jsx";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     // Set the initial state of the application
     this.state = {
+      // Game states
       gameStarted: false,
       playerPlaying: false,
       deckId: "",
+      // Dealer options and flags
       dealerHand: [],
       dealerScore: 0,
       dealerInitialScore: 0,
       dealerHasAce: false,
       dealerHasBlackjack: false,
       insurance: false,
+      // Player options and flags
       playerHand: [],
       playerScore: 0,
       playerHasAce: false,
       playerHasBlackjack: false,
-      playerSplit: false,
+      playerSplittable: false,
       // Game Statistics
       playerWins: 0,
       dealerWins: 0,
@@ -29,7 +33,11 @@ export default class App extends Component {
       dealerBlackjacks: 0,
       playerBusts: 0,
       dealerBusts: 0,
-      gameMessage: ""
+      gameMessage: "",
+      // Betting options and flags
+      playerChips: 1000,
+      betAmount: 20,
+
     };
   };
 
@@ -83,7 +91,7 @@ export default class App extends Component {
             playerPlaying: true,
             playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
             playerHasAce: true,
-            playerSplit: true,
+            playerSplittable: true,
             playerScore: 12,
             dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
             dealerHasAce: false,
@@ -106,7 +114,7 @@ export default class App extends Component {
           this.setState({
             gameStarted: true,
             playerPlaying: true,
-            playerSplit: true,
+            playerSplittable: true,
             playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
             playerScore: (this.state.playerScore += value0 + value2),
             dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
@@ -172,7 +180,7 @@ export default class App extends Component {
       playerScore: 0,
       playerHasAce: false,
       playerHasBlackjack: false,
-      playerSplit: false,
+      playerSplittable: false,
       // Game Statistics
       playerWins: 0,
       dealerWins: 0,
@@ -292,19 +300,19 @@ export default class App extends Component {
             this.setState({
               playerScore: this.state.playerScore - 10,
               playerHasAce: true,
-              playerSplit: false
+              playerSplittable: false
             });
           } else if (newValue === 11) {
             this.setState({
               playerHasAce: true,
-              playerSplit: false
+              playerSplittable: false
             });
           };
           // Otherwise update player hand and player score from response
           this.setState({
             playerHand: [...this.state.playerHand, json.cards[0]],
             playerScore: (this.state.playerScore += newValue),
-            playerSplit: false
+            playerSplittable: false
           });
           this.bustChecker();
         });
@@ -404,7 +412,7 @@ export default class App extends Component {
       playerScore: 0,
       playerHasAce: false,
       playerHasBlackjack: false,
-      playerSplit: false,
+      playerSplittable: false,
       gameMessage: ""
     });
     this.handleDealHand();
@@ -444,7 +452,7 @@ export default class App extends Component {
               cards={this.state.playerHand}
               score={this.state.playerScore}
               playerPlaying={this.state.playerPlaying}
-              playerSplit={this.state.playerSplit}
+              playerSplittable={this.state.playerSplittable}
               handleSplitEvent={this.handleSplitEvent}
               handleDrawCardEvent={this.handleDrawCardEvent}
               handleStandEvent={this.handleStandEvent}
@@ -462,8 +470,12 @@ export default class App extends Component {
         ) : (
           ""
         )}
+      <Chips 
+        playerChips={this.state.playerChips}
+        betAmount={this.state.betAmount}
+      />  
       <h3>{this.state.gameMessage}</h3>
       </div>
-    );
-  };
-};
+    )
+  }
+}

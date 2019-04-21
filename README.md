@@ -12,7 +12,7 @@ Six decks in the shoe<br />
 
 Clone this repo into a directory<br />
 cd directory<br />
-npm init<br />
+npm install<br />
 npm start<br />
 application will run on localhost:3000<br />
 
