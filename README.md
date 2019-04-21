@@ -9,6 +9,7 @@ Blackjack pays 3:2<br />
 Insurance pays 2:1<br />
 Push on both player and dealer blackjacks<br />
 Six decks in the shoe<br />
+Shoe is shuffled after 50% of the cards are dealt<br />
 
 ## Installing the app
 
@@ -31,3 +32,7 @@ Add insurance option<br />
 Add deck count/customization<br />
 Add high score<br />
 Make responsive<br />
+
+## Known Bugs
+
+Game breaks when there are no more cards from the deck

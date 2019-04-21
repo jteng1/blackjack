@@ -74,9 +74,8 @@ export default class App extends Component {
     return cardValues[value];
   };
 
-  // Handle the initial hand deal, i.e. when Start Game is clicked
+  // Handle the initial hand deal, i.e. when Start Game is clicked or when Deal is clicked
   handleDealHand() {
-
     // Deal with initial betting
     this.setState({
       betAmount: 20,
@@ -89,6 +88,17 @@ export default class App extends Component {
     fetch(`https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=4`)
       .then(res => res.json())
       .then(json => {
+        // Check remaining cards and shuffle deck if remaining cards is less than 100 cards, or 25% of deck
+        console.log(json.remaining);
+        if (json.remaining < 100) {
+          fetch(`https://deckofcardsapi.com/api/deck/${this.state.deckId}/shuffle/`)
+          .then(res => res.json())
+          .then(json => {
+            console.log(json)
+            console.log("Deck reshuffled!")
+          })
+        }
+
         // Return blackjack values of json card values
         const value0 = this.returnValue(json.cards[0].value);
         const value1 = this.returnValue(json.cards[1].value);
@@ -166,7 +176,8 @@ export default class App extends Component {
         };
         // After the ace checks
         this.blackJackChecker();
-      });
+      })
+      .catch(err => console.log(err))
       
   };
 
@@ -207,7 +218,7 @@ export default class App extends Component {
       betAmount: 20,
       chipsInPlay: 0,
       winAmount: 0
-    });
+    })
   };
 
   // Checks for blackjack
@@ -249,7 +260,8 @@ export default class App extends Component {
         playerPlaying: false,
         playerWins: this.state.playerWins + 1,
         playerBlackjacks: this.state.playerBlackjacks + 1,
-        playerChips: this.state.playerChips + (3 * this.state.chipsInPlay)/2,
+        playerChips: this.state.playerChips + this.state.betAmount + (3 * this.state.chipsInPlay/2),
+        winAmount: 3*this.state.chipsInPlay/2,
         chipsInPlay: 0,
         gameMessage: "Blackjack!"
       });
@@ -354,7 +366,8 @@ export default class App extends Component {
             playerSplittable: false
           });
           this.bustChecker();
-        });
+        })
+        .catch(err => console.log(err));
     };
   };
 
