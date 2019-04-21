@@ -5,6 +5,8 @@ the Deck of Cards API.
 
 ## Rules
 Dealer stands on 17<br />
+Blackjack pays 3:2<br />
+Insurance pays 2:1<br />
 Push on both player and dealer blackjacks<br />
 Six decks in the shoe<br />
 

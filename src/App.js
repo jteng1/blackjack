@@ -397,6 +397,11 @@ export default class App extends Component {
 
   // When player clicks DOUBLE DOWN
   handleDoubleDownEvent = event => {
+    // Handle Double Down Bet
+    this.setState({
+      playerChips: this.state.playerChips - this.state.betAmount,
+      chipsInPlay: this.state.chipsInPlay + this.state.betAmount
+    });
     if (this.state.playerScore < 21) {
       fetch(
         `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
