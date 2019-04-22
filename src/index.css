@@ -151,6 +151,11 @@ button.red:hover {
 }
 
 .chipStats {
-  flex: 100%;
+  flex: 50%;
+  padding: 15px;
+}
+
+.chipBets {
+  flex: 50%;
   padding: 15px;
 }

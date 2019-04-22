@@ -8,9 +8,16 @@ export default class Chips extends Component {
       <div className="chips-container">
         <div className="chipStats">
             <p>Player Chips: $ {this.props.playerChips.toFixed(2)}</p>
-            <p>Bet Amount: $ {this.props.betAmount.toFixed(2)}</p>
             <p>Chips in Play: $ {this.props.chipsInPlay.toFixed(2)}</p>
             <p>Win Amount: $ {this.props.winAmount.toFixed(2)}</p>
+        </div>
+        <div className="chipBets">
+            <button className="sm" onClick={event => this.props.increaseBetOne(event)}>$1</button>
+            <button className="sm" onClick={event => this.props.increaseBetFive(event)}>$5</button>
+            <button className="sm" onClick={event => this.props.increaseBetTen(event)}>$10</button>
+            <button className="sm" onClick={event => this.props.increaseBetTwentyFive(event)}>$25</button>
+            <button className="sm" onClick={event => this.props.clearBets(event)}>Clear Bets</button>
+            <p>Bet Amount: $ {this.props.betAmount.toFixed(2)}</p>
         </div>
       </div>
     )

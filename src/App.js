@@ -53,6 +53,77 @@ export default class App extends Component {
       });
   };
 
+  // When End Game is pressed a new deck is drawn, reset state to initial state
+  handleEndGame() {
+    fetch(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6`)
+    .then(res => res.json())
+    .then(json => {
+      this.setState({
+        deckId: json.deck_id
+      });
+    });
+    this.setState({
+      gameStarted: false,
+      playerPlaying: false,
+      dealerHand: [],
+      dealerScore: 0,
+      dealerInitialScore: 0,
+      dealerHasAce: false,
+      dealerHasBlackjack: false,
+      insurance: false,
+      playerHand: [],
+      playerScore: 0,
+      playerHasAce: false,
+      playerHasBlackjack: false,
+      playerSplittable: false,
+      // Game Statistics
+      playerWins: 0,
+      dealerWins: 0,
+      pushes: 0,
+      playerBlackjacks: 0,
+      dealerBlackjacks: 0,
+      playerBusts: 0,
+      dealerBusts: 0,
+      gameMessage: "",
+      // Betting options and flags
+      playerChips: 1000,
+      betAmount: 20,
+      chipsInPlay: 0,
+      winAmount: 0
+    })
+  };
+  
+  // Handle Betting buttons
+  increaseBetOne = event => {
+    this.setState({
+      betAmount: this.state.betAmount + 1
+    });
+  };
+
+  increaseBetFive = event => {
+    this.setState({
+      betAmount: this.state.betAmount + 5
+    }); 
+  };
+
+  increaseBetTen = event => {
+    this.setState({
+      betAmount: this.state.betAmount + 10
+    });
+  };
+
+  increaseBetTwentyFive = event => {
+    this.setState({
+      betAmount: this.state.betAmount + 25
+    });
+  };
+
+  clearBets = event => {
+    this.setState({
+      betAmount: 0
+    });
+  };
+
   // Return corresponding blackjack value from input card value 
   returnValue(value) {
     const cardValues = {
@@ -78,7 +149,7 @@ export default class App extends Component {
   handleDealHand() {
     // Deal with initial betting
     this.setState({
-      betAmount: 20,
+      betAmount: this.state.betAmount,
       playerChips: this.state.playerChips - this.state.betAmount,
       chipsInPlay: this.state.betAmount,
       winAmount: 0,
@@ -179,46 +250,6 @@ export default class App extends Component {
       })
       .catch(err => console.log(err))
       
-  };
-
-  // When End Game is pressed a new deck is drawn, reset state to initial state
-  handleEndGame() {
-    fetch(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6`)
-    .then(res => res.json())
-    .then(json => {
-      this.setState({
-        deckId: json.deck_id
-      });
-    });
-    this.setState({
-      gameStarted: false,
-      playerPlaying: false,
-      dealerHand: [],
-      dealerScore: 0,
-      dealerInitialScore: 0,
-      dealerHasAce: false,
-      dealerHasBlackjack: false,
-      insurance: false,
-      playerHand: [],
-      playerScore: 0,
-      playerHasAce: false,
-      playerHasBlackjack: false,
-      playerSplittable: false,
-      // Game Statistics
-      playerWins: 0,
-      dealerWins: 0,
-      pushes: 0,
-      playerBlackjacks: 0,
-      dealerBlackjacks: 0,
-      playerBusts: 0,
-      dealerBusts: 0,
-      gameMessage: "",
-      // Betting options and flags
-      playerChips: 1000,
-      betAmount: 20,
-      chipsInPlay: 0,
-      winAmount: 0
-    })
   };
 
   // Checks for blackjack
@@ -497,6 +528,13 @@ export default class App extends Component {
             betAmount={this.state.betAmount}
             chipsInPlay={this.state.chipsInPlay}
             winAmount={this.state.winAmount}
+            // Bet Functions
+            increaseBetOne={this.increaseBetOne}
+            increaseBetFive={this.increaseBetFive}
+            increaseBetTen={this.increaseBetTen}
+            increaseBetTwentyFive={this.increaseBetTwentyFive}
+            clearBets={this.clearBets}
+
           />  
         </div>
         {this.state.gameStarted ? (
