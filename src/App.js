@@ -457,34 +457,40 @@ export default class App extends Component {
   // When player clicks DOUBLE DOWN
   handleDoubleDownEvent = event => {
     // Handle Double Down Bet
-    this.setState({
-      playerChips: this.state.playerChips - this.state.betAmount,
-      chipsInPlay: this.state.chipsInPlay + this.state.betAmount
-    });
-    if (this.state.playerScore < 21) {
-      fetch(
-        `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
-      )
-        .then(res => res.json())
-        .then(json => {
-          const newValue = this.returnValue(json.cards[0].value);
-          // Check if new card is an ace
-          if (newValue === 11) {
+    if (this.state.betAmount > this.state.playerChips) {
+      this.setState({
+        gameMessage: "You do not have enough to double down!"
+      });
+    } else {
+      this.setState({
+        playerChips: this.state.playerChips - this.state.betAmount,
+        chipsInPlay: this.state.chipsInPlay + this.state.betAmount
+      });
+      if (this.state.playerScore < 21) {
+        fetch(
+          `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
+        )
+          .then(res => res.json())
+          .then(json => {
+            const newValue = this.returnValue(json.cards[0].value);
+            // Check if new card is an ace
+            if (newValue === 11) {
+              this.setState({
+                playerHasAce: true
+              });
+            };
             this.setState({
-              playerHasAce: true
+              playerHand: [...this.state.playerHand, json.cards[0]],
+              playerScore: (this.state.playerScore += newValue),
+              playerPlaying: false
             });
-          };
-          this.setState({
-            playerHand: [...this.state.playerHand, json.cards[0]],
-            playerScore: (this.state.playerScore += newValue),
-            playerPlaying: false
+            // Check if the double down was a bust, if it was a bust do not execute auto hits for dealer
+            this.bustChecker();
+            if (this.state.playerScore <= 21) {
+              this.handleStandEvent();
+            };
           });
-          // Check if the double down was a bust, if it was a bust do not execute auto hits for dealer
-          this.bustChecker();
-          if (this.state.playerScore <= 21) {
-            this.handleStandEvent();
-          };
-        });
+      };
     };
   };
 
@@ -537,6 +543,7 @@ export default class App extends Component {
             betAmount={this.state.betAmount}
             chipsInPlay={this.state.chipsInPlay}
             winAmount={this.state.winAmount}
+            playerPlaying={this.state.playerPlaying}
             // Bet Functions
             increaseBetOne={this.increaseBetOne}
             increaseBetFive={this.increaseBetFive}
