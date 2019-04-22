@@ -147,16 +147,25 @@ export default class App extends Component {
 
   // Handle the initial hand deal, i.e. when Start Game is clicked or when Deal is clicked
   handleDealHand() {
-    // Deal with initial betting
-    this.setState({
-      betAmount: this.state.betAmount,
-      playerChips: this.state.playerChips - this.state.betAmount,
-      chipsInPlay: this.state.betAmount,
-      winAmount: 0,
-    })
-    
-    // Draw 4 cards from the deck
-    fetch(`https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=4`)
+    // If player bet is zero
+    if (this.state.betAmount === 0) {
+      this.setState({
+        gameMessage: "You have to bet some money!"
+      });
+    } else if (this.state.betAmount > this.state.playerChips) {
+      this.setState({
+        gameMessage: "You do not have that much money"
+      });
+    } else {
+      // Deal with initial betting
+      this.setState({
+        betAmount: this.state.betAmount,
+        playerChips: this.state.playerChips - this.state.betAmount,
+        chipsInPlay: this.state.betAmount,
+        winAmount: 0,
+      });
+      // Draw 4 cards from the deck
+      fetch(`https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=4`)
       .then(res => res.json())
       .then(json => {
         // Check remaining cards and shuffle deck if remaining cards is less than 100 cards, or 25% of deck
@@ -165,10 +174,10 @@ export default class App extends Component {
           fetch(`https://deckofcardsapi.com/api/deck/${this.state.deckId}/shuffle/`)
           .then(res => res.json())
           .then(json => {
-            console.log(json)
-            console.log("Deck reshuffled!")
-          })
-        }
+            console.log(json);
+            console.log("Deck reshuffled!");
+          });
+        };
 
         // Return blackjack values of json card values
         const value0 = this.returnValue(json.cards[0].value);
@@ -249,8 +258,8 @@ export default class App extends Component {
         this.blackJackChecker();
       })
       .catch(err => console.log(err))
-      
-  };
+      };
+    };
 
   // Checks for blackjack
   blackJackChecker() {
