@@ -35,8 +35,8 @@ export default class App extends Component {
       dealerBusts: 0,
       gameMessage: "",
       // Betting options and flags
-      playerChips: 1000,
-      betAmount: 20,
+      playerChips: 0,
+      betAmount: 0,
       chipsInPlay: 0,
       winAmount: 0
     };
@@ -86,13 +86,45 @@ export default class App extends Component {
       dealerBusts: 0,
       gameMessage: "",
       // Betting options and flags
-      playerChips: 1000,
+      playerChips: 0,
       betAmount: 20,
       chipsInPlay: 0,
       winAmount: 0
     })
   };
-  
+
+  // Handle Chips Increase buttons
+  increaseChipOne = event => {
+    this.setState({
+      playerChips: this.state.playerChips + 1
+    });
+  };
+
+  increaseChipFive = event => {
+    this.setState({
+      playerChips: this.state.playerChips + 5
+    }); 
+  };
+
+  increaseChipTen = event => {
+    this.setState({
+      playerChips: this.state.playerChips + 10
+    });
+  };
+
+  increaseChipTwentyFive = event => {
+    this.setState({
+      playerChips: this.state.playerChips + 25
+    });
+  };
+
+  clearChips = event => {
+    this.setState({
+      playerChips: 0
+    });
+  };
+
+
   // Handle Betting buttons
   increaseBetOne = event => {
     this.setState({
@@ -544,6 +576,13 @@ export default class App extends Component {
             chipsInPlay={this.state.chipsInPlay}
             winAmount={this.state.winAmount}
             playerPlaying={this.state.playerPlaying}
+            gameStarted={this.state.gameStarted}
+            // Increase Chips Functions
+            increaseChipOne={this.increaseChipOne}
+            increaseChipFive={this.increaseChipFive}
+            increaseChipTen={this.increaseChipTen}
+            increaseChipTwentyFive={this.increaseChipTwentyFive}
+            clearChips={this.clearChips}
             // Bet Functions
             increaseBetOne={this.increaseBetOne}
             increaseBetFive={this.increaseBetFive}

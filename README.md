@@ -35,4 +35,4 @@ Make responsive<br />
 
 ## Known Bugs
 
-Game breaks when there are no more cards from the deck
+Game breaks when there are no more cards from the deck - Fixed
