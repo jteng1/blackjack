@@ -67,12 +67,12 @@ button.sm {
 }
 
 button.red {
-  background:rgb(100, 13, 13);
+  background:rgb(160, 21, 21);
   color:white;
 }
 button.red:hover {
   background:white;
-  color: rgb(100, 13, 13);
+  color: rgb(160, 21, 21);
 }
 
 /* App Component */
@@ -151,11 +151,16 @@ button.red:hover {
 }
 
 .chipStats {
-  flex: 50%;
+  flex: 33%;
   padding: 15px;
 }
 
 .chipBets {
-  flex: 50%;
+  flex: 33%;
+  padding: 15px;
+}
+
+.buyInButtons {
+  flex: 33%;
   padding: 15px;
 }

@@ -559,6 +559,7 @@ export default class App extends Component {
         <div className="gameHeader">
           <h1>Blackjack</h1>
           <h3>Dealer stands on 17</h3>
+          {/* If game isn't started show Start Game button else show New Deck */}
           {this.state.gameStarted ? (
             <div>
               <button className="lg red" onClick={() => this.handleEndGame()}>

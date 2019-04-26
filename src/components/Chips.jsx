@@ -8,13 +8,13 @@ export default class Chips extends Component {
       <div className="chips-container">
       {/* If game is not started then show player chips buttons */}
         {this.props.gameStarted === false ? (
-            <div className="chipButtons">
+            <div className="buyInButtons">
                 <button className="sm" onClick={event => this.props.increaseChipOne(event)}>$1</button>
                 <button className="sm" onClick={event => this.props.increaseChipFive(event)}>$5</button>
                 <button className="sm" onClick={event => this.props.increaseChipTen(event)}>$10</button>
                 <button className="sm" onClick={event => this.props.increaseChipTwentyFive(event)}>$25</button>
                 <button className="sm" onClick={event => this.props.clearChips(event)}>Clear Chips</button>
-                <p>Player Chips: $ {this.props.playerChips.toFixed(2)}</p>
+                <p>Buy-In Amount: $ {this.props.playerChips.toFixed(2)}</p>
             </div>
         ) : (
             <div className="chipStats">
