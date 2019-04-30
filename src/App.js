@@ -87,7 +87,7 @@ export default class App extends Component {
       gameMessage: "",
       // Betting options and flags
       playerChips: 0,
-      betAmount: 20,
+      betAmount: 0,
       chipsInPlay: 0,
       winAmount: 0
     })
@@ -127,27 +127,51 @@ export default class App extends Component {
 
   // Handle Betting buttons
   increaseBetOne = event => {
-    this.setState({
-      betAmount: this.state.betAmount + 1
-    });
+    if (this.state.betAmount + 1 > this.state.playerChips) {
+      this.setState({
+        gameMessage: "You don't have enough chips to bet that amount"
+      });
+    } else {
+      this.setState({
+        betAmount: this.state.betAmount + 1
+      });
+    };
   };
 
   increaseBetFive = event => {
-    this.setState({
-      betAmount: this.state.betAmount + 5
-    }); 
+    if (this.state.betAmount + 5 > this.state.playerChips) {
+      this.setState({
+        gameMessage: "You don't have enough chips to bet that amount"
+      });
+    } else {
+      this.setState({
+        betAmount: this.state.betAmount + 5
+      });
+    };
   };
 
   increaseBetTen = event => {
-    this.setState({
-      betAmount: this.state.betAmount + 10
-    });
+    if (this.state.betAmount + 10 > this.state.playerChips) {
+      this.setState({
+        gameMessage: "You don't have enough chips to bet that amount"
+      });
+    } else {
+      this.setState({
+        betAmount: this.state.betAmount + 10
+      });
+    };
   };
 
   increaseBetTwentyFive = event => {
-    this.setState({
-      betAmount: this.state.betAmount + 25
-    });
+    if (this.state.betAmount + 25 > this.state.playerChips) {
+      this.setState({
+        gameMessage: "You don't have enough chips to bet that amount"
+      });
+    } else {
+      this.setState({
+        betAmount: this.state.betAmount + 25
+      });
+    };
   };
 
   clearBets = event => {
