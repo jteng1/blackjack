@@ -13,7 +13,7 @@ export default class Chips extends Component {
                 <button className="sm" onClick={event => this.props.increaseChipFive(event)}>$5</button>
                 <button className="sm" onClick={event => this.props.increaseChipTen(event)}>$10</button>
                 <button className="sm" onClick={event => this.props.increaseChipTwentyFive(event)}>$25</button>
-                <button className="sm" onClick={event => this.props.clearChips(event)}>Clear Chips</button>
+                <button className="sm red" onClick={event => this.props.clearChips(event)}>Clear Chips</button>
                 <p>Buy-In Amount: $ {this.props.playerChips.toFixed(2)}</p>
             </div>
         ) : (
@@ -24,14 +24,14 @@ export default class Chips extends Component {
             </div>
         )}
         <div className="chipBets">
-            {/* If player is not playing then show bet buttons */}
-            {this.props.playerPlaying === false ? (
+            {/* If player is not playing AND playerChips is zero then show bet buttons */}
+            {this.props.playerPlaying === false && this.props.playerChips != 0 ? (
                 <div className="chipButtons">
                     <button className="sm" onClick={event => this.props.increaseBetOne(event)}>$1</button>
                     <button className="sm" onClick={event => this.props.increaseBetFive(event)}>$5</button>
                     <button className="sm" onClick={event => this.props.increaseBetTen(event)}>$10</button>
                     <button className="sm" onClick={event => this.props.increaseBetTwentyFive(event)}>$25</button>
-                    <button className="sm" onClick={event => this.props.clearBets(event)}>Clear Bets</button>
+                    <button className="sm red" onClick={event => this.props.clearBets(event)}>Clear Bets</button>
                 </div>
             ) : (
                 ""

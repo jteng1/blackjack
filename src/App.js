@@ -587,12 +587,12 @@ export default class App extends Component {
           {this.state.gameStarted ? (
             <div>
               <button className="lg red" onClick={() => this.handleEndGame()}>
-                New Deck
+                New Game
               </button>
             </div>
           ) : (
             <button className="lg" onClick={() => this.handleDealHand()}>
-              Start Game
+              Deal!
             </button>
           )}
           <Chips 

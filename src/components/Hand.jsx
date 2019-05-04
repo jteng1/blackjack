@@ -62,7 +62,8 @@ export default class Hand extends Component {
                         ) : (
                             ""
                         )}
-                        {this.props.playerSplittable ? (
+                        {/* Show split button when both cards are the same value - NOT IMPLEMENTED YET*/}
+                        {/* {this.props.playerSplittable ? (
                             <button
                             className="sm"
                             onClick={event => this.props.handleSplitEvent(event)}
@@ -71,7 +72,7 @@ export default class Hand extends Component {
                             </button>
                         ) : (
                             ""
-                        )}
+                        )} */}
                     </div>
                 ) : (
                     <button
