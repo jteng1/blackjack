@@ -25,7 +25,7 @@ export default class Chips extends Component {
         )}
         <div className="chipBets">
             {/* If player is not playing AND playerChips is zero then show bet buttons */}
-            {this.props.playerPlaying === false && this.props.playerChips != 0 ? (
+            {this.props.playerPlaying === false && this.props.playerChips !== 0 ? (
                 <div className="chipButtons">
                     <button className="sm" onClick={event => this.props.increaseBetOne(event)}>$1</button>
                     <button className="sm" onClick={event => this.props.increaseBetFive(event)}>$5</button>

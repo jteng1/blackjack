@@ -252,7 +252,7 @@ export default class App extends Component {
             playerScore: 12,
             dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
             dealerHasAce: false,
-            dealerScore: (this.state.dealerScore += value1 + value3),
+            dealerScore: this.state.dealerScore + value1 + value3,
             dealerInitialScore: value3
           });
         } else if (value0 === 11 || value2 === 11) {
@@ -260,11 +260,11 @@ export default class App extends Component {
             gameStarted: true,
             playerPlaying: true,
             playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
-            playerScore: (this.state.playerScore += value0 + value2),
+            playerScore: this.state.playerScore + value0 + value2,
             playerHasAce: true,
             dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
             dealerHasAce: false,
-            dealerScore: (this.state.dealerScore += value1 + value3),
+            dealerScore: this.state.dealerScore + value1 + value3,
             dealerInitialScore: value3
           });
         } else if (value0 === value2) {
@@ -273,10 +273,10 @@ export default class App extends Component {
             playerPlaying: true,
             playerSplittable: true,
             playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
-            playerScore: (this.state.playerScore += value0 + value2),
+            playerScore: this.state.playerScore + value0 + value2,
             dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
             dealerHasAce: false,
-            dealerScore: (this.state.dealerScore += value1 + value3),
+            dealerScore: this.state.dealerScore + value1 + value3,
             dealerInitialScore: value3
           });
         } else {
@@ -284,10 +284,10 @@ export default class App extends Component {
             gameStarted: true,
             playerPlaying: true,
             playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
-            playerScore: (this.state.playerScore += value0 + value2),
+            playerScore: this.state.playerScore + value0 + value2,
             dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
             dealerHasAce: false,
-            dealerScore: (this.state.dealerScore += value1 + value3),
+            dealerScore: this.state.dealerScore + value1 + value3,
             dealerInitialScore: value3
           });
         };
@@ -458,7 +458,7 @@ export default class App extends Component {
           // Otherwise update player hand and player score from response
           this.setState({
             playerHand: [...this.state.playerHand, json.cards[0]],
-            playerScore: (this.state.playerScore += newValue),
+            playerScore: this.state.playerScore + newValue,
             playerSplittable: false
           });
           this.bustChecker();
@@ -497,7 +497,7 @@ export default class App extends Component {
           this.setState({
             playerPlaying: false,
             dealerHand: [...this.state.dealerHand, json.cards[0]],
-            dealerScore: (this.state.dealerScore += newValue)
+            dealerScore: this.state.dealerScore + newValue
           });
           this.handleStandEvent();
         });
@@ -537,7 +537,7 @@ export default class App extends Component {
             };
             this.setState({
               playerHand: [...this.state.playerHand, json.cards[0]],
-              playerScore: (this.state.playerScore += newValue),
+              playerScore: this.state.playerScore + newValue,
               playerPlaying: false
             });
             // Check if the double down was a bust, if it was a bust do not execute auto hits for dealer

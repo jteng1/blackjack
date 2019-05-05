@@ -27,6 +27,7 @@ export default class Hand extends Component {
             ) : (
                 <h5>{this.props.score}</h5>
             )}
+            {/* If the player is playing, then the first card of the dealer is hidden */}
             {this.props.playerPlaying ? (
                 <div className="cards-container"><img src={blankCard} alt="cardback" className="blankCard" />{cards[1]}</div>
             ) : (
