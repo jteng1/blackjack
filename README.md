@@ -1,15 +1,18 @@
 ## Blackjack created with React
 
 This is my personal recreation of a blackjack application bootstrapped with create-react-app. It was created from scratch with only React and pulls cards from
-the Deck of Cards API.
+the Deck of Cards API. It was built without state management and using class based components.
 
 ## Play the game
+
 Play blackjack at https://nekasrofd.github.io/blackjack/
 
 ## Purpose
+
 I wanted to create a blackjack simulation that I could practice on with a statistics and betting with chips. I also wanted to create it purely in React with no state management to understand the idea of a "Single Source of Truth" and to get a better feel of managing state and passing properties without utilizing a state management system like Redux.
 
 ## Rules
+
 Dealer stands on 17<br />
 Blackjack pays 3:2<br />
 Insurance pays 2:1 (Not available yet) <br />
@@ -42,5 +45,3 @@ Add card counting stats <br />
 Make responsive<br />
 
 ## Known Bugs
-
-Game breaks when there are no more cards from the deck - Fixed

@@ -37,11 +37,13 @@ export default class Chips extends Component {
             >
               Clear Chips
             </button>
-            <h1>Buy-In Amount $ {this.props.playerChips.toFixed(2)}</h1>
+            <h1>Buy-In Amount</h1>
+            <h1>${this.props.playerChips.toFixed(2)}</h1>
           </div>
         ) : (
           <div className='chipStats'>
-            <h1>Player Chips $ {this.props.playerChips.toFixed(2)}</h1>
+            <h1>Player Chips</h1>
+            <h1>${this.props.playerChips.toFixed(2)}</h1>
             <p>Chips in Play: $ {this.props.chipsInPlay.toFixed(2)}</p>
             <p>Win Amount: $ {this.props.winAmount.toFixed(2)}</p>
           </div>
@@ -85,7 +87,8 @@ export default class Chips extends Component {
           ) : (
             ''
           )}
-          <h1>Bet Amount $ {this.props.betAmount.toFixed(2)}</h1>
+          <h1>Bet Amount</h1>
+          <h1>${this.props.betAmount.toFixed(2)}</h1>
         </div>
       </div>
     );
