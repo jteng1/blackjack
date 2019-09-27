@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import Hand from "./components/Hand.jsx";
-import Stats from "./components/Stats.jsx";
-import Chips from "./components/Chips.jsx";
+import React, { Component } from 'react';
+import Hand from './components/Hand.jsx';
+import Stats from './components/Stats.jsx';
+import Chips from './components/Chips.jsx';
 
 export default class App extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class App extends Component {
       // Game states
       gameStarted: false,
       playerPlaying: false,
-      deckId: "",
+      deckId: '',
       // Dealer options and flags
       dealerHand: [],
       dealerScore: 0,
@@ -33,14 +33,14 @@ export default class App extends Component {
       dealerBlackjacks: 0,
       playerBusts: 0,
       dealerBusts: 0,
-      gameMessage: "",
+      gameMessage: '',
       // Betting options and flags
       playerChips: 0,
       betAmount: 0,
       chipsInPlay: 0,
       winAmount: 0
     };
-  };
+  }
 
   // Fetches deck(s) from Deck of Cards API
   componentDidMount() {
@@ -51,17 +51,17 @@ export default class App extends Component {
           deckId: json.deck_id
         });
       });
-  };
+  }
 
   // When End Game is pressed a new deck is drawn, reset state to initial state
   handleEndGame() {
     fetch(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6`)
-    .then(res => res.json())
-    .then(json => {
-      this.setState({
-        deckId: json.deck_id
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          deckId: json.deck_id
+        });
       });
-    });
     this.setState({
       gameStarted: false,
       playerPlaying: false,
@@ -84,14 +84,14 @@ export default class App extends Component {
       dealerBlackjacks: 0,
       playerBusts: 0,
       dealerBusts: 0,
-      gameMessage: "",
+      gameMessage: '',
       // Betting options and flags
       playerChips: 0,
       betAmount: 0,
       chipsInPlay: 0,
       winAmount: 0
-    })
-  };
+    });
+  }
 
   // Handle Chips Increase buttons
   increaseChipOne = event => {
@@ -103,7 +103,7 @@ export default class App extends Component {
   increaseChipFive = event => {
     this.setState({
       playerChips: this.state.playerChips + 5
-    }); 
+    });
   };
 
   increaseChipTen = event => {
@@ -124,7 +124,6 @@ export default class App extends Component {
     });
   };
 
-
   // Handle Betting buttons
   increaseBetOne = event => {
     if (this.state.betAmount + 1 > this.state.playerChips) {
@@ -135,7 +134,7 @@ export default class App extends Component {
       this.setState({
         betAmount: this.state.betAmount + 1
       });
-    };
+    }
   };
 
   increaseBetFive = event => {
@@ -147,7 +146,7 @@ export default class App extends Component {
       this.setState({
         betAmount: this.state.betAmount + 5
       });
-    };
+    }
   };
 
   increaseBetTen = event => {
@@ -159,7 +158,7 @@ export default class App extends Component {
       this.setState({
         betAmount: this.state.betAmount + 10
       });
-    };
+    }
   };
 
   increaseBetTwentyFive = event => {
@@ -171,7 +170,7 @@ export default class App extends Component {
       this.setState({
         betAmount: this.state.betAmount + 25
       });
-    };
+    }
   };
 
   clearBets = event => {
@@ -180,37 +179,37 @@ export default class App extends Component {
     });
   };
 
-  // Return corresponding blackjack value from input card value 
+  // Return corresponding blackjack value from input card value
   returnValue(value) {
     const cardValues = {
       ACE: 11,
       KING: 10,
       QUEEN: 10,
       JACK: 10,
-      "10": 10,
-      "9": 9,
-      "8": 8,
-      "7": 7,
-      "6": 6,
-      "5": 5,
-      "4": 4,
-      "3": 3,
-      "2": 2
+      '10': 10,
+      '9': 9,
+      '8': 8,
+      '7': 7,
+      '6': 6,
+      '5': 5,
+      '4': 4,
+      '3': 3,
+      '2': 2
     };
 
     return cardValues[value];
-  };
+  }
 
   // Handle the initial hand deal, i.e. when Start Game is clicked or when Deal is clicked
   handleDealHand() {
     // If player bet is zero
     if (this.state.betAmount === 0) {
       this.setState({
-        gameMessage: "You have to bet some money!"
+        gameMessage: 'You have to bet some money!'
       });
     } else if (this.state.betAmount > this.state.playerChips) {
       this.setState({
-        gameMessage: "You do not have that much money"
+        gameMessage: 'You do not have that much money'
       });
     } else {
       // Deal with initial betting
@@ -218,129 +217,176 @@ export default class App extends Component {
         betAmount: this.state.betAmount,
         playerChips: this.state.playerChips - this.state.betAmount,
         chipsInPlay: this.state.betAmount,
-        winAmount: 0,
+        winAmount: 0
       });
       // Draw 4 cards from the deck
-      fetch(`https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=4`)
-      .then(res => res.json())
-      .then(json => {
-        // Check remaining cards and shuffle deck if remaining cards is less than 100 cards, or 25% of deck
-        console.log(json.remaining);
-        if (json.remaining < 100) {
-          fetch(`https://deckofcardsapi.com/api/deck/${this.state.deckId}/shuffle/`)
-          .then(res => res.json())
-          .then(json => {
-            console.log(json);
-            console.log("Deck reshuffled!");
-          });
-        };
+      fetch(
+        `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=4`
+      )
+        .then(res => res.json())
+        .then(json => {
+          // Check remaining cards and shuffle deck if remaining cards is less than 100 cards, or 25% of deck
+          console.log(json.remaining);
+          if (json.remaining < 100) {
+            fetch(
+              `https://deckofcardsapi.com/api/deck/${this.state.deckId}/shuffle/`
+            )
+              .then(res => res.json())
+              .then(json => {
+                console.log(json);
+                console.log('Deck reshuffled!');
+              });
+          }
 
-        // Return blackjack values of json card values
-        const value0 = this.returnValue(json.cards[0].value);
-        const value1 = this.returnValue(json.cards[1].value);
-        const value2 = this.returnValue(json.cards[2].value);
-        const value3 = this.returnValue(json.cards[3].value);
+          // Return blackjack values of json card values
+          const value0 = this.returnValue(json.cards[0].value);
+          const value1 = this.returnValue(json.cards[1].value);
+          const value2 = this.returnValue(json.cards[2].value);
+          const value3 = this.returnValue(json.cards[3].value);
 
-        // Check if the player has two Aces first or just an Ace, or else set default state 
-        if (value0 === 11 && value2 === 11) {
-          this.setState({
-            gameStarted: true,
-            playerPlaying: true,
-            playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
-            playerHasAce: true,
-            playerSplittable: true,
-            playerScore: 12,
-            dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
-            dealerHasAce: false,
-            dealerScore: this.state.dealerScore + value1 + value3,
-            dealerInitialScore: value3
-          });
-        } else if (value0 === 11 || value2 === 11) {
-          this.setState({
-            gameStarted: true,
-            playerPlaying: true,
-            playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
-            playerScore: this.state.playerScore + value0 + value2,
-            playerHasAce: true,
-            dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
-            dealerHasAce: false,
-            dealerScore: this.state.dealerScore + value1 + value3,
-            dealerInitialScore: value3
-          });
-        } else if (value0 === value2) {
-          this.setState({
-            gameStarted: true,
-            playerPlaying: true,
-            playerSplittable: true,
-            playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
-            playerScore: this.state.playerScore + value0 + value2,
-            dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
-            dealerHasAce: false,
-            dealerScore: this.state.dealerScore + value1 + value3,
-            dealerInitialScore: value3
-          });
-        } else {
-          this.setState({
-            gameStarted: true,
-            playerPlaying: true,
-            playerHand: [...this.state.playerHand, json.cards[0], json.cards[2]],
-            playerScore: this.state.playerScore + value0 + value2,
-            dealerHand: [...this.state.dealerHand, json.cards[1], json.cards[3]],
-            dealerHasAce: false,
-            dealerScore: this.state.dealerScore + value1 + value3,
-            dealerInitialScore: value3
-          });
-        };
-        // Check if dealer has two aces or an ace
-        if (value1 === 11 && value3 === 11) {
-          this.setState({
-            dealerHasAce: true,
-            dealerScore: 12,
-            insurance: true,
-            gameMessage: "Insurance?"
-          });
-        } else if (value3 === 11) {
-          this.setState({
-            dealerHasAce: true,
-            insurance: true,
-            gameMessage: "Insurance?"
-          });
-        } else if (value1 === 11 || value3 === 11) {
-          this.setState({
-            dealerHasAce: true
-          });
-        };
-        // After the ace checks
-        this.blackJackChecker();
-      })
-      .catch(err => console.log(err))
-      };
-    };
+          // Check if the player has two Aces first or just an Ace, or else set default state
+          if (value0 === 11 && value2 === 11) {
+            this.setState({
+              gameStarted: true,
+              playerPlaying: true,
+              playerHand: [
+                ...this.state.playerHand,
+                json.cards[0],
+                json.cards[2]
+              ],
+              playerHasAce: true,
+              playerSplittable: true,
+              playerScore: 12,
+              dealerHand: [
+                ...this.state.dealerHand,
+                json.cards[1],
+                json.cards[3]
+              ],
+              dealerHasAce: false,
+              dealerScore: this.state.dealerScore + value1 + value3,
+              dealerInitialScore: value3
+            });
+          } else if (value0 === 11 || value2 === 11) {
+            this.setState({
+              gameStarted: true,
+              playerPlaying: true,
+              playerHand: [
+                ...this.state.playerHand,
+                json.cards[0],
+                json.cards[2]
+              ],
+              playerScore: this.state.playerScore + value0 + value2,
+              playerHasAce: true,
+              dealerHand: [
+                ...this.state.dealerHand,
+                json.cards[1],
+                json.cards[3]
+              ],
+              dealerHasAce: false,
+              dealerScore: this.state.dealerScore + value1 + value3,
+              dealerInitialScore: value3
+            });
+          } else if (value0 === value2) {
+            this.setState({
+              gameStarted: true,
+              playerPlaying: true,
+              playerSplittable: true,
+              playerHand: [
+                ...this.state.playerHand,
+                json.cards[0],
+                json.cards[2]
+              ],
+              playerScore: this.state.playerScore + value0 + value2,
+              dealerHand: [
+                ...this.state.dealerHand,
+                json.cards[1],
+                json.cards[3]
+              ],
+              dealerHasAce: false,
+              dealerScore: this.state.dealerScore + value1 + value3,
+              dealerInitialScore: value3
+            });
+          } else {
+            this.setState({
+              gameStarted: true,
+              playerPlaying: true,
+              playerHand: [
+                ...this.state.playerHand,
+                json.cards[0],
+                json.cards[2]
+              ],
+              playerScore: this.state.playerScore + value0 + value2,
+              dealerHand: [
+                ...this.state.dealerHand,
+                json.cards[1],
+                json.cards[3]
+              ],
+              dealerHasAce: false,
+              dealerScore: this.state.dealerScore + value1 + value3,
+              dealerInitialScore: value3
+            });
+          }
+          // Check if dealer has two aces or an ace
+          if (value1 === 11 && value3 === 11) {
+            this.setState({
+              dealerHasAce: true,
+              dealerScore: 12,
+              insurance: true,
+              gameMessage: 'Insurance?'
+            });
+          } else if (value3 === 11) {
+            this.setState({
+              dealerHasAce: true,
+              insurance: true,
+              gameMessage: 'Insurance?'
+            });
+          } else if (value1 === 11 || value3 === 11) {
+            this.setState({
+              dealerHasAce: true
+            });
+          }
+          // After the ace checks
+          this.blackJackChecker();
+        })
+        .catch(err => console.log(err));
+    }
+  }
 
   // Checks for blackjack
   blackJackChecker() {
-    
     // Check for player blackjack
-    if (this.returnValue(this.state.playerHand[0].value) === 10 && this.returnValue(this.state.playerHand[1].value) === 11) {
+    if (
+      this.returnValue(this.state.playerHand[0].value) === 10 &&
+      this.returnValue(this.state.playerHand[1].value) === 11
+    ) {
       this.setState({
         playerHasBlackjack: true
       });
-    } else if (this.returnValue(this.state.playerHand[1].value) === 10 && this.returnValue(this.state.playerHand[0].value) === 11) {
+    } else if (
+      this.returnValue(this.state.playerHand[1].value) === 10 &&
+      this.returnValue(this.state.playerHand[0].value) === 11
+    ) {
       this.setState({
         playerHasBlackjack: true
       });
-    };
+    }
 
     // Check for dealer blackjack
-    if (this.returnValue(this.state.dealerHand[0].value) === 10 && this.returnValue(this.state.dealerHand[1].value) === 11) {
+    if (
+      this.returnValue(this.state.dealerHand[0].value) === 10 &&
+      this.returnValue(this.state.dealerHand[1].value) === 11
+    ) {
       this.setState({
         dealerHasBlackjack: true
       });
-    } else if (this.returnValue(this.state.dealerHand[1].value) === 10 && this.returnValue(this.state.dealerHand[0].value) === 11) {
+    } else if (
+      this.returnValue(this.state.dealerHand[1].value) === 10 &&
+      this.returnValue(this.state.dealerHand[0].value) === 11
+    ) {
       this.setState({
         dealerHasBlackjack: true
       });
-    };
+    }
 
     // Check who has blackjacks and award chips accordingly
     if (this.state.playerHasBlackjack && this.state.dealerHasBlackjack) {
@@ -349,17 +395,20 @@ export default class App extends Component {
         pushes: this.state.pushes + 1,
         playerChips: this.state.playerChips + this.state.chipsInPlay,
         chipsInPlay: 0,
-        gameMessage: "Push! You both have a Blackjack!",
+        gameMessage: 'Push! You both have a Blackjack!'
       });
     } else if (this.state.playerHasBlackjack) {
       this.setState({
         playerPlaying: false,
         playerWins: this.state.playerWins + 1,
         playerBlackjacks: this.state.playerBlackjacks + 1,
-        playerChips: this.state.playerChips + this.state.betAmount + (3 * this.state.chipsInPlay/2),
-        winAmount: 3*this.state.chipsInPlay/2,
+        playerChips:
+          this.state.playerChips +
+          this.state.betAmount +
+          (3 * this.state.chipsInPlay) / 2,
+        winAmount: (3 * this.state.chipsInPlay) / 2,
         chipsInPlay: 0,
-        gameMessage: "Blackjack!"
+        gameMessage: 'Blackjack!'
       });
     } else if (this.state.dealerHasBlackjack) {
       this.setState({
@@ -367,10 +416,10 @@ export default class App extends Component {
         dealerWins: this.state.dealerWins + 1,
         dealerBlackjacks: this.state.dealerBlackjacks + 1,
         chipsInPlay: 0,
-        gameMessage: "Dealer has a Blackjack!"
+        gameMessage: 'Dealer has a Blackjack!'
       });
-    };
-  };
+    }
+  }
 
   // Checks if the player bust, if there is an ace in hand subtract 10 and set playerHasAce to false
   bustChecker() {
@@ -378,17 +427,17 @@ export default class App extends Component {
       this.setState({
         playerScore: this.state.playerScore - 10,
         playerHasAce: false
-      })
+      });
     } else if (this.state.playerScore > 21) {
       this.setState({
         playerPlaying: false,
         dealerWins: this.state.dealerWins + 1,
         playerBusts: this.state.playerBusts + 1,
         chipsInPlay: 0,
-        gameMessage: "You Busted!"
+        gameMessage: 'You Busted!'
       });
-    };
-  };
+    }
+  }
 
   // Determines winner of hand
   checkWinner() {
@@ -401,9 +450,12 @@ export default class App extends Component {
         playerChips: this.state.playerChips + 2 * this.state.chipsInPlay,
         winAmount: this.state.chipsInPlay,
         chipsInPlay: 0,
-        gameMessage: "Dealer busts, you won!"
+        gameMessage: 'Dealer busts, you won!'
       });
-    } else if (this.state.playerScore > this.state.dealerScore && this.state.playerScore <= 21) {
+    } else if (
+      this.state.playerScore > this.state.dealerScore &&
+      this.state.playerScore <= 21
+    ) {
       this.setState({
         // Set statistics
         playerWins: this.state.playerWins + 1,
@@ -420,7 +472,7 @@ export default class App extends Component {
         // Set chips, return original chips in play if push
         playerChips: this.state.playerChips + this.state.chipsInPlay,
         chipsInPlay: 0,
-        gameMessage: "You pushed!"
+        gameMessage: 'You pushed!'
       });
     } else {
       this.setState({
@@ -428,10 +480,10 @@ export default class App extends Component {
         dealerWins: this.state.dealerWins + 1,
         // Set chips
         chipsInPlay: 0,
-        gameMessage: "You lost!"
+        gameMessage: 'You lost!'
       });
-    };
-  };
+    }
+  }
 
   // When player clicks HIT
   handleDrawCardEvent = event => {
@@ -454,7 +506,7 @@ export default class App extends Component {
               playerHasAce: true,
               playerSplittable: false
             });
-          };
+          }
           // Otherwise update player hand and player score from response
           this.setState({
             playerHand: [...this.state.playerHand, json.cards[0]],
@@ -464,7 +516,7 @@ export default class App extends Component {
           this.bustChecker();
         })
         .catch(err => console.log(err));
-    };
+    }
   };
 
   // When player clicks STAND, execute dealer hits less than 17
@@ -493,7 +545,7 @@ export default class App extends Component {
             this.setState({
               dealerHasAce: true
             });
-          };
+          }
           this.setState({
             playerPlaying: false,
             dealerHand: [...this.state.dealerHand, json.cards[0]],
@@ -507,7 +559,7 @@ export default class App extends Component {
         playerPlaying: false
       });
       this.checkWinner();
-    };
+    }
   };
 
   // When player clicks DOUBLE DOWN
@@ -515,7 +567,7 @@ export default class App extends Component {
     // Handle Double Down Bet
     if (this.state.betAmount > this.state.playerChips) {
       this.setState({
-        gameMessage: "You do not have enough to double down!"
+        gameMessage: 'You do not have enough to double down!'
       });
     } else {
       this.setState({
@@ -534,7 +586,7 @@ export default class App extends Component {
               this.setState({
                 playerHasAce: true
               });
-            };
+            }
             this.setState({
               playerHand: [...this.state.playerHand, json.cards[0]],
               playerScore: this.state.playerScore + newValue,
@@ -544,16 +596,16 @@ export default class App extends Component {
             this.bustChecker();
             if (this.state.playerScore <= 21) {
               this.handleStandEvent();
-            };
+            }
           });
-      };
-    };
+      }
+    }
   };
 
   // When player clicks SPLIT
   handleSplitEvent = event => {
     this.setState({
-      dealerSplit: false,
+      dealerSplit: false
     });
   };
 
@@ -572,30 +624,30 @@ export default class App extends Component {
       playerHasAce: false,
       playerHasBlackjack: false,
       playerSplittable: false,
-      gameMessage: ""
+      gameMessage: ''
     });
     this.handleDealHand();
   };
 
   render() {
     return (
-      <div className="App">
-        <div className="gameHeader">
+      <div className='App'>
+        <div className='gameHeader'>
           <h1>Blackjack</h1>
           <h3>Dealer stands on 17</h3>
           {/* If game isn't started show Start Game button else show New Deck */}
           {this.state.gameStarted ? (
             <div>
-              <button className="lg red" onClick={() => this.handleEndGame()}>
+              <button className='lg red' onClick={() => this.handleEndGame()}>
                 New Game
               </button>
             </div>
           ) : (
-            <button className="lg" onClick={() => this.handleDealHand()}>
+            <button className='lg' onClick={() => this.handleDealHand()}>
               Deal!
             </button>
           )}
-          <Chips 
+          <Chips
             playerChips={this.state.playerChips}
             betAmount={this.state.betAmount}
             chipsInPlay={this.state.chipsInPlay}
@@ -614,13 +666,13 @@ export default class App extends Component {
             increaseBetTen={this.increaseBetTen}
             increaseBetTwentyFive={this.increaseBetTwentyFive}
             clearBets={this.clearBets}
-
-          />  
+          />
         </div>
+        <h3>{this.state.gameMessage}</h3>
         {this.state.gameStarted ? (
-          <div className="hands-container">
+          <div className='hands-container'>
             <Hand
-              name="Player"
+              name='Player'
               cards={this.state.playerHand}
               score={this.state.playerScore}
               playerPlaying={this.state.playerPlaying}
@@ -632,7 +684,7 @@ export default class App extends Component {
               handleDoubleDownEvent={this.handleDoubleDownEvent}
             />
             <Hand
-              name="Dealer"
+              name='Dealer'
               cards={this.state.dealerHand}
               score={this.state.dealerScore}
               playerPlaying={this.state.playerPlaying}
@@ -640,19 +692,18 @@ export default class App extends Component {
             />
           </div>
         ) : (
-          ""
+          ''
         )}
-      <Stats 
-        playerWins={this.state.playerWins}
-        dealerWins={this.state.dealerWins}
-        playerBlackjacks={this.state.playerBlackjacks}
-        dealerBlackjacks={this.state.dealerBlackjacks}
-        playerBusts={this.state.playerBusts}
-        dealerBusts={this.state.dealerBusts}
-        pushes={this.state.pushes}
-      />
-      <h3>{this.state.gameMessage}</h3>
+        <Stats
+          playerWins={this.state.playerWins}
+          dealerWins={this.state.dealerWins}
+          playerBlackjacks={this.state.playerBlackjacks}
+          dealerBlackjacks={this.state.dealerBlackjacks}
+          playerBusts={this.state.playerBusts}
+          dealerBusts={this.state.dealerBusts}
+          pushes={this.state.pushes}
+        />
       </div>
-    )
+    );
   }
 }
