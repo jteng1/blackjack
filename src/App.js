@@ -217,6 +217,7 @@ export default class App extends Component {
         betAmount: this.state.betAmount,
         playerChips: this.state.playerChips - this.state.betAmount,
         chipsInPlay: this.state.betAmount,
+        gameMessage: 'Choose an action...',
         winAmount: 0
       });
       // Draw 4 cards from the deck
@@ -331,14 +332,14 @@ export default class App extends Component {
             this.setState({
               dealerHasAce: true,
               dealerScore: 12,
-              insurance: true,
-              gameMessage: 'Insurance?'
+              insurance: true
+              // gameMessage: 'Insurance?'
             });
           } else if (value3 === 11) {
             this.setState({
               dealerHasAce: true,
-              insurance: true,
-              gameMessage: 'Insurance?'
+              insurance: true
+              // gameMessage: 'Insurance?'
             });
           } else if (value1 === 11 || value3 === 11) {
             this.setState({
@@ -634,7 +635,6 @@ export default class App extends Component {
       <div className='App'>
         <div className='gameHeader'>
           <h1>Blackjack</h1>
-          <h3>Dealer stands on 17</h3>
           {/* If game isn't started show Start Game button else show New Deck */}
           {this.state.gameStarted ? (
             <div>
@@ -647,30 +647,21 @@ export default class App extends Component {
               Deal!
             </button>
           )}
-          <Chips
-            playerChips={this.state.playerChips}
-            betAmount={this.state.betAmount}
-            chipsInPlay={this.state.chipsInPlay}
-            winAmount={this.state.winAmount}
-            playerPlaying={this.state.playerPlaying}
-            gameStarted={this.state.gameStarted}
-            // Increase Chips Functions
-            increaseChipOne={this.increaseChipOne}
-            increaseChipFive={this.increaseChipFive}
-            increaseChipTen={this.increaseChipTen}
-            increaseChipTwentyFive={this.increaseChipTwentyFive}
-            clearChips={this.clearChips}
-            // Bet Functions
-            increaseBetOne={this.increaseBetOne}
-            increaseBetFive={this.increaseBetFive}
-            increaseBetTen={this.increaseBetTen}
-            increaseBetTwentyFive={this.increaseBetTwentyFive}
-            clearBets={this.clearBets}
-          />
         </div>
-        <h3>{this.state.gameMessage}</h3>
+        {this.state.gameMessage ? (
+          <h2>{this.state.gameMessage}</h2>
+        ) : (
+          <h2>Welcome to Blackjack! Please buy in and place a bet</h2>
+        )}
         {this.state.gameStarted ? (
           <div className='hands-container'>
+            <Hand
+              name='Dealer'
+              cards={this.state.dealerHand}
+              score={this.state.dealerScore}
+              playerPlaying={this.state.playerPlaying}
+              dealerInitialScore={this.state.dealerInitialScore}
+            />
             <Hand
               name='Player'
               cards={this.state.playerHand}
@@ -683,17 +674,30 @@ export default class App extends Component {
               handleDealEvent={this.handleDealEvent}
               handleDoubleDownEvent={this.handleDoubleDownEvent}
             />
-            <Hand
-              name='Dealer'
-              cards={this.state.dealerHand}
-              score={this.state.dealerScore}
-              playerPlaying={this.state.playerPlaying}
-              dealerInitialScore={this.state.dealerInitialScore}
-            />
           </div>
         ) : (
           ''
         )}
+        <Chips
+          playerChips={this.state.playerChips}
+          betAmount={this.state.betAmount}
+          chipsInPlay={this.state.chipsInPlay}
+          winAmount={this.state.winAmount}
+          playerPlaying={this.state.playerPlaying}
+          gameStarted={this.state.gameStarted}
+          // Increase Chips Functions
+          increaseChipOne={this.increaseChipOne}
+          increaseChipFive={this.increaseChipFive}
+          increaseChipTen={this.increaseChipTen}
+          increaseChipTwentyFive={this.increaseChipTwentyFive}
+          clearChips={this.clearChips}
+          // Bet Functions
+          increaseBetOne={this.increaseBetOne}
+          increaseBetFive={this.increaseBetFive}
+          increaseBetTen={this.increaseBetTen}
+          increaseBetTwentyFive={this.increaseBetTwentyFive}
+          clearBets={this.clearBets}
+        />
         <Stats
           playerWins={this.state.playerWins}
           dealerWins={this.state.dealerWins}
