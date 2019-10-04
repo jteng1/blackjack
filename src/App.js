@@ -451,7 +451,7 @@ export default class App extends Component {
         playerChips: this.state.playerChips + 2 * this.state.chipsInPlay,
         winAmount: this.state.chipsInPlay,
         chipsInPlay: 0,
-        gameMessage: 'Dealer busts, you won!'
+        gameMessage: 'Dealer busts, you win!'
       });
     } else if (
       this.state.playerScore > this.state.dealerScore &&
@@ -464,7 +464,7 @@ export default class App extends Component {
         playerChips: this.state.playerChips + 2 * this.state.chipsInPlay,
         winAmount: this.state.chipsInPlay,
         chipsInPlay: 0,
-        gameMessage: `You won!`
+        gameMessage: `You win!`
       });
     } else if (this.state.playerScore === this.state.dealerScore) {
       this.setState({
@@ -643,9 +643,7 @@ export default class App extends Component {
               </button>
             </div>
           ) : (
-            <button className='lg' onClick={() => this.handleDealHand()}>
-              Deal!
-            </button>
+            ''
           )}
         </div>
         {this.state.gameMessage ? (
@@ -698,6 +696,13 @@ export default class App extends Component {
           increaseBetTwentyFive={this.increaseBetTwentyFive}
           clearBets={this.clearBets}
         />
+        {!this.state.gameStarted ? (
+          <button className='lg' onClick={() => this.handleDealHand()}>
+            Deal!
+          </button>
+        ) : (
+          ''
+        )}
         <Stats
           playerWins={this.state.playerWins}
           dealerWins={this.state.dealerWins}
