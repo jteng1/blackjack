@@ -31,6 +31,7 @@ application will run on localhost:3000<br />
 
 ## Versions
 
+1.2.0 - Made UI more mobile friendly
 1.1.0 - Released playable build on github-pages<br />
 1.0.0 - Added functionality for game<br />
 
