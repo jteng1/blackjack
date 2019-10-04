@@ -35,6 +35,7 @@ export default class App extends Component {
       dealerBusts: 0,
       gameMessage: '',
       // Betting options and flags
+      initialBuy: 0,
       playerChips: 0,
       betAmount: 0,
       chipsInPlay: 0,
@@ -86,6 +87,7 @@ export default class App extends Component {
       dealerBusts: 0,
       gameMessage: '',
       // Betting options and flags
+      initialBuy: 0,
       playerChips: 0,
       betAmount: 0,
       chipsInPlay: 0,
@@ -96,36 +98,42 @@ export default class App extends Component {
   // Handle Chips Increase buttons
   increaseChipOne = event => {
     this.setState({
+      initialBuy: this.state.initialBuy + 1,
       playerChips: this.state.playerChips + 1
     });
   };
 
   increaseChipFive = event => {
     this.setState({
+      initialBuy: this.state.initialBuy + 5,
       playerChips: this.state.playerChips + 5
     });
   };
 
   increaseChipTen = event => {
     this.setState({
+      initialBuy: this.state.initialBuy + 10,
       playerChips: this.state.playerChips + 10
     });
   };
 
   increaseChipTwentyFive = event => {
     this.setState({
+      initialBuy: this.state.initialBuy + 25,
       playerChips: this.state.playerChips + 25
     });
   };
 
   increaseChipHundred = event => {
     this.setState({
+      initialBuy: this.state.initialBuy + 100,
       playerChips: this.state.playerChips + 100
     });
   };
 
   clearChips = event => {
     this.setState({
+      initialBuy: 0,
       playerChips: 0
     });
   };
@@ -697,6 +705,7 @@ export default class App extends Component {
         <Chips
           playerChips={this.state.playerChips}
           betAmount={this.state.betAmount}
+          initialBuy={this.state.initialBuy}
           chipsInPlay={this.state.chipsInPlay}
           winAmount={this.state.winAmount}
           playerPlaying={this.state.playerPlaying}

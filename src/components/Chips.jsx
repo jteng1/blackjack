@@ -142,10 +142,11 @@ export default class Chips extends Component {
                 ''
               )}
             </div>
-            <h3>Bet ${this.props.betAmount.toFixed(2)}</h3>
-            <h3>Player Chips ${this.props.playerChips.toFixed(2)}</h3>
-            <p>Chips in Play: $ {this.props.chipsInPlay.toFixed(2)}</p>
-            <p>Win Amount: $ {this.props.winAmount.toFixed(2)}</p>
+            <h2>Bet ${this.props.betAmount.toFixed(2)}</h2>
+            <h2>Player Chips ${this.props.playerChips.toFixed(2)}</h2>
+            <h5>Chips in Play $ {this.props.chipsInPlay.toFixed(2)}</h5>
+            <h5>Win Amount $ {this.props.winAmount.toFixed(2)}</h5>
+            <h3>Initial Buy-In $ {this.props.initialBuy.toFixed(2)}</h3>
           </div>
         )}
       </div>
