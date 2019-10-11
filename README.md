@@ -5,7 +5,7 @@ the Deck of Cards API. It was built without state management and using class bas
 
 ## Play the game
 
-Play blackjack at https://nekasrofd.github.io/blackjack/
+Play blackjack at https://jteng1.github.io/blackjack/
 
 ## Purpose
 
