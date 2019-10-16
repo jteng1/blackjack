@@ -7,6 +7,10 @@ the Deck of Cards API. It was built without state management and using class bas
 
 Play blackjack at https://jteng1.github.io/blackjack/
 
+## Demo
+
+![Video Blackjack Demo](demo/blackjack.gif)
+
 ## Purpose
 
 I wanted to create a blackjack simulation that I could practice on with a statistics and betting with chips. I also wanted to create it purely in React with no state management to understand the idea of a "Single Source of Truth" and to get a better feel of managing state and passing properties without utilizing a state management system like Redux.
