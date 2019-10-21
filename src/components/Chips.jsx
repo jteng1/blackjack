@@ -83,6 +83,12 @@ export default class Chips extends Component {
                     $100
                   </button>
                   <button
+                    className='sm'
+                    onClick={event => this.props.increaseBetAllIn(event)}
+                  >
+                    Max Bet
+                  </button>
+                  <button
                     className='sm red'
                     onClick={event => this.props.clearBets(event)}
                   >
@@ -130,6 +136,12 @@ export default class Chips extends Component {
                     onClick={event => this.props.increaseBetHundred(event)}
                   >
                     $100
+                  </button>
+                  <button
+                    className='sm'
+                    onClick={event => this.props.increaseBetAllIn(event)}
+                  >
+                    Max Bet
                   </button>
                   <button
                     className='sm red'

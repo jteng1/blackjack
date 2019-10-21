@@ -95,7 +95,7 @@ export default class App extends Component {
     });
   }
 
-  // Handle Chips Increase buttons
+  // Handle Buying In Chips Increase buttons
   increaseChipOne = event => {
     this.setState({
       initialBuy: this.state.initialBuy + 1,
@@ -197,6 +197,12 @@ export default class App extends Component {
         betAmount: this.state.betAmount + 100
       });
     }
+  };
+
+  increaseBetAllIn = event => {
+    this.setState({
+      betAmount: this.state.playerChips
+    });
   };
 
   clearBets = event => {
@@ -723,6 +729,7 @@ export default class App extends Component {
           increaseBetTen={this.increaseBetTen}
           increaseBetTwentyFive={this.increaseBetTwentyFive}
           increaseBetHundred={this.increaseBetHundred}
+          increaseBetAllIn={this.increaseBetAllIn}
           clearBets={this.clearBets}
         />
         {!this.state.gameStarted ? (
