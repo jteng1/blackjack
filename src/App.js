@@ -235,7 +235,11 @@ export default class App extends Component {
   // Handle the initial hand deal, i.e. when Start Game is clicked or when Deal is clicked
   handleDealHand() {
     // If player bet is zero
-    if (this.state.betAmount === 0) {
+    if (this.state.playerChips === 0) {
+      this.setState({
+        gameMessage: `You have no more money! Press 'NEW GAME' to play again.`
+      });
+    } else if (this.state.betAmount === 0) {
       this.setState({
         gameMessage: 'You have to bet some money!'
       });
