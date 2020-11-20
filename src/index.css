@@ -56,11 +56,6 @@ button {
   transition: background-color 100ms linear, color 100ms linear;
 }
 
-button:hover {
-  background: white;
-  color: #427643;
-}
-
 button.lg {
   font: 1rem Bembo, Arial, sans-serif;
   padding: 0.4rem 5rem;
@@ -77,18 +72,28 @@ button.red {
   background: rgb(160, 21, 21);
   color: white;
 }
-button.red:hover {
-  background: white;
-  color: rgb(160, 21, 21);
-}
 
 button.purple {
   background: rgb(125, 0, 241);
   color: white;
 }
-button.purple:hover {
-  background: white;
-  color: rgb(125, 0, 241);
+
+/* Do not hover on mobile devices */
+@media (hover: hover) {
+  button:hover {
+    background: white;
+    color: #427643;
+  }
+
+  button.red:hover {
+    background: white;
+    color: rgb(160, 21, 21);
+  }
+
+  button.purple:hover {
+    background: white;
+    color: rgb(125, 0, 241);
+  }
 }
 
 /* App Component */
