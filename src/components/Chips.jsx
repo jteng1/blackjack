@@ -9,37 +9,37 @@ export default class Chips extends Component {
           <div className='buyInButtons'>
             <button
               className='sm'
-              onClick={event => this.props.increaseChipOne(event)}
+              onClick={(event) => this.props.increaseChipOne(event)}
             >
               $1
             </button>
             <button
               className='sm'
-              onClick={event => this.props.increaseChipFive(event)}
+              onClick={(event) => this.props.increaseChipFive(event)}
             >
               $5
             </button>
             <button
               className='sm'
-              onClick={event => this.props.increaseChipTen(event)}
+              onClick={(event) => this.props.increaseChipTen(event)}
             >
               $10
             </button>
             <button
               className='sm'
-              onClick={event => this.props.increaseChipTwentyFive(event)}
+              onClick={(event) => this.props.increaseChipTwentyFive(event)}
             >
               $25
             </button>
             <button
               className='sm'
-              onClick={event => this.props.increaseChipHundred(event)}
+              onClick={(event) => this.props.increaseChipHundred(event)}
             >
               $100
             </button>
             <button
               className='sm red'
-              onClick={event => this.props.clearChips(event)}
+              onClick={(event) => this.props.clearChips(event)}
             >
               Clear Chips
             </button>
@@ -54,43 +54,43 @@ export default class Chips extends Component {
                 <div className='chipButtons'>
                   <button
                     className='sm'
-                    onClick={event => this.props.increaseBetOne(event)}
+                    onClick={(event) => this.props.increaseBetOne(event)}
                   >
                     $1
                   </button>
                   <button
                     className='sm'
-                    onClick={event => this.props.increaseBetFive(event)}
+                    onClick={(event) => this.props.increaseBetFive(event)}
                   >
                     $5
                   </button>
                   <button
                     className='sm'
-                    onClick={event => this.props.increaseBetTen(event)}
+                    onClick={(event) => this.props.increaseBetTen(event)}
                   >
                     $10
                   </button>
                   <button
                     className='sm'
-                    onClick={event => this.props.increaseBetTwentyFive(event)}
+                    onClick={(event) => this.props.increaseBetTwentyFive(event)}
                   >
                     $25
                   </button>
                   <button
                     className='sm'
-                    onClick={event => this.props.increaseBetHundred(event)}
+                    onClick={(event) => this.props.increaseBetHundred(event)}
                   >
                     $100
                   </button>
                   <button
                     className='sm'
-                    onClick={event => this.props.increaseBetAllIn(event)}
+                    onClick={(event) => this.props.increaseBetAllIn(event)}
                   >
                     Max Bet
                   </button>
                   <button
                     className='sm red'
-                    onClick={event => this.props.clearBets(event)}
+                    onClick={(event) => this.props.clearBets(event)}
                   >
                     Clear Bets
                   </button>
@@ -109,43 +109,43 @@ export default class Chips extends Component {
                 <div className='chipButtons'>
                   <button
                     className='sm'
-                    onClick={event => this.props.increaseBetOne(event)}
+                    onClick={(event) => this.props.increaseBetOne(event)}
                   >
                     $1
                   </button>
                   <button
                     className='sm'
-                    onClick={event => this.props.increaseBetFive(event)}
+                    onClick={(event) => this.props.increaseBetFive(event)}
                   >
                     $5
                   </button>
                   <button
                     className='sm'
-                    onClick={event => this.props.increaseBetTen(event)}
+                    onClick={(event) => this.props.increaseBetTen(event)}
                   >
                     $10
                   </button>
                   <button
                     className='sm'
-                    onClick={event => this.props.increaseBetTwentyFive(event)}
+                    onClick={(event) => this.props.increaseBetTwentyFive(event)}
                   >
                     $25
                   </button>
                   <button
                     className='sm'
-                    onClick={event => this.props.increaseBetHundred(event)}
+                    onClick={(event) => this.props.increaseBetHundred(event)}
                   >
                     $100
                   </button>
                   <button
                     className='sm'
-                    onClick={event => this.props.increaseBetAllIn(event)}
+                    onClick={(event) => this.props.increaseBetAllIn(event)}
                   >
                     Max Bet
                   </button>
                   <button
                     className='sm red'
-                    onClick={event => this.props.clearBets(event)}
+                    onClick={(event) => this.props.clearBets(event)}
                   >
                     Clear Bets
                   </button>

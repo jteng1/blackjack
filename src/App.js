@@ -239,7 +239,7 @@ export default class App extends Component {
     // If player bet is zero
     if (this.state.playerChips === 0) {
       this.setState({
-        gameMessage: `You have no more money! Press 'NEW GAME' to play again.`,
+        gameMessage: `You have no more money! Press NEW GAME to play again.`,
       });
     } else if (this.state.betAmount === 0) {
       this.setState({
@@ -678,7 +678,7 @@ export default class App extends Component {
     }
   };
 
-  // When player clicks SPLIT
+  // TODO: When player clicks SPLIT
   handleSplitEvent = (event) => {
     this.setState({
       dealerSplit: false,
@@ -694,6 +694,7 @@ export default class App extends Component {
       dealerInitialScore: 0,
       dealerHasAce: false,
       dealerHasBlackjack: false,
+      dealerSoft: false,
       insurance: false,
       playerHand: [],
       playerScore: 0,

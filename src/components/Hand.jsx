@@ -25,6 +25,15 @@ export default class Hand extends Component {
                 {this.props.name} {this.props.score}
               </h3>
             )}
+            {/* Show blank cards when not ready */}
+            {this.props.cards.length == 0 ? (
+              <div className='cards-container'>
+                <img src={blankCard} alt='cardback' className='blankCard' />
+                <img src={blankCard} alt='cardback' className='blankCard' />
+              </div>
+            ) : (
+              ''
+            )}
             {/* If the player is playing, then the first card of the dealer is hidden */}
             {this.props.playerPlaying ? (
               <div className='cards-container'>
@@ -40,6 +49,15 @@ export default class Hand extends Component {
             <h3>
               {this.props.name} {this.props.score}
             </h3>
+            {/* Show blank cards when not ready */}
+            {this.props.cards.length == 0 ? (
+              <div className='cards-container'>
+                <img src={blankCard} alt='cardback' className='blankCard' />
+                <img src={blankCard} alt='cardback' className='blankCard' />
+              </div>
+            ) : (
+              ''
+            )}
             <div className='cards-container'>{cards}</div>
             {this.props.playerPlaying ? (
               <div className='playingButtons'>
@@ -65,7 +83,7 @@ export default class Hand extends Component {
                 ) : (
                   ''
                 )}
-                {/* TODOL Show split button when both cards are the same value */}
+                {/* TODO: Show split button when both cards are the same value */}
                 {/* {this.props.playerSplittable ? (
                   <button
                     className='sm'
