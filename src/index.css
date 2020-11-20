@@ -63,13 +63,13 @@ button:hover {
 
 button.lg {
   font: 1rem Bembo, Arial, sans-serif;
-  padding: 0.5rem;
+  padding: 0.4rem 5rem;
   font-weight: bold;
 }
 
 button.sm {
   font: 1rem Bembo, Arial, sans-serif;
-  padding: 0.6rem;
+  padding: 0.3rem 1rem;
   font-weight: bold;
 }
 
@@ -80,6 +80,15 @@ button.red {
 button.red:hover {
   background: white;
   color: rgb(160, 21, 21);
+}
+
+button.purple {
+  background: rgb(125, 0, 241);
+  color: white;
+}
+button.purple:hover {
+  background: white;
+  color: rgb(125, 0, 241);
 }
 
 /* App Component */

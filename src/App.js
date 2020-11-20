@@ -18,6 +18,7 @@ export default class App extends Component {
       dealerInitialScore: 0,
       dealerHasAce: false,
       dealerHasBlackjack: false,
+      dealerSoft: false,
       insurance: false,
       // Player options and flags
       playerHand: [],
@@ -39,28 +40,28 @@ export default class App extends Component {
       playerChips: 0,
       betAmount: 0,
       chipsInPlay: 0,
-      winAmount: 0
+      winAmount: 0,
     };
   }
 
   // Fetches deck(s) from Deck of Cards API
   componentDidMount() {
-    fetch(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6`)
-      .then(res => res.json())
-      .then(json => {
+    fetch(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=8`)
+      .then((res) => res.json())
+      .then((json) => {
         this.setState({
-          deckId: json.deck_id
+          deckId: json.deck_id,
         });
       });
   }
 
   // When End Game is pressed a new deck is drawn, reset state to initial state
   handleEndGame() {
-    fetch(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6`)
-      .then(res => res.json())
-      .then(json => {
+    fetch(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=8`)
+      .then((res) => res.json())
+      .then((json) => {
         this.setState({
-          deckId: json.deck_id
+          deckId: json.deck_id,
         });
       });
     this.setState({
@@ -71,6 +72,7 @@ export default class App extends Component {
       dealerInitialScore: 0,
       dealerHasAce: false,
       dealerHasBlackjack: false,
+      dealerSoft: false,
       insurance: false,
       playerHand: [],
       playerScore: 0,
@@ -91,123 +93,123 @@ export default class App extends Component {
       playerChips: 0,
       betAmount: 0,
       chipsInPlay: 0,
-      winAmount: 0
+      winAmount: 0,
     });
   }
 
   // Handle Buying In Chips Increase buttons
-  increaseChipOne = event => {
+  increaseChipOne = (event) => {
     this.setState({
       initialBuy: this.state.initialBuy + 1,
-      playerChips: this.state.playerChips + 1
+      playerChips: this.state.playerChips + 1,
     });
   };
 
-  increaseChipFive = event => {
+  increaseChipFive = (event) => {
     this.setState({
       initialBuy: this.state.initialBuy + 5,
-      playerChips: this.state.playerChips + 5
+      playerChips: this.state.playerChips + 5,
     });
   };
 
-  increaseChipTen = event => {
+  increaseChipTen = (event) => {
     this.setState({
       initialBuy: this.state.initialBuy + 10,
-      playerChips: this.state.playerChips + 10
+      playerChips: this.state.playerChips + 10,
     });
   };
 
-  increaseChipTwentyFive = event => {
+  increaseChipTwentyFive = (event) => {
     this.setState({
       initialBuy: this.state.initialBuy + 25,
-      playerChips: this.state.playerChips + 25
+      playerChips: this.state.playerChips + 25,
     });
   };
 
-  increaseChipHundred = event => {
+  increaseChipHundred = (event) => {
     this.setState({
       initialBuy: this.state.initialBuy + 100,
-      playerChips: this.state.playerChips + 100
+      playerChips: this.state.playerChips + 100,
     });
   };
 
-  clearChips = event => {
+  clearChips = (event) => {
     this.setState({
       initialBuy: 0,
-      playerChips: 0
+      playerChips: 0,
     });
   };
 
   // Handle Betting buttons
-  increaseBetOne = event => {
+  increaseBetOne = (event) => {
     if (this.state.betAmount + 1 > this.state.playerChips) {
       this.setState({
-        gameMessage: "You don't have enough chips to bet that amount"
+        gameMessage: "You don't have enough chips to bet that amount",
       });
     } else {
       this.setState({
-        betAmount: this.state.betAmount + 1
+        betAmount: this.state.betAmount + 1,
       });
     }
   };
 
-  increaseBetFive = event => {
+  increaseBetFive = (event) => {
     if (this.state.betAmount + 5 > this.state.playerChips) {
       this.setState({
-        gameMessage: "You don't have enough chips to bet that amount"
+        gameMessage: "You don't have enough chips to bet that amount",
       });
     } else {
       this.setState({
-        betAmount: this.state.betAmount + 5
+        betAmount: this.state.betAmount + 5,
       });
     }
   };
 
-  increaseBetTen = event => {
+  increaseBetTen = (event) => {
     if (this.state.betAmount + 10 > this.state.playerChips) {
       this.setState({
-        gameMessage: "You don't have enough chips to bet that amount"
+        gameMessage: "You don't have enough chips to bet that amount",
       });
     } else {
       this.setState({
-        betAmount: this.state.betAmount + 10
+        betAmount: this.state.betAmount + 10,
       });
     }
   };
 
-  increaseBetTwentyFive = event => {
+  increaseBetTwentyFive = (event) => {
     if (this.state.betAmount + 25 > this.state.playerChips) {
       this.setState({
-        gameMessage: "You don't have enough chips to bet that amount"
+        gameMessage: "You don't have enough chips to bet that amount",
       });
     } else {
       this.setState({
-        betAmount: this.state.betAmount + 25
+        betAmount: this.state.betAmount + 25,
       });
     }
   };
 
-  increaseBetHundred = event => {
+  increaseBetHundred = (event) => {
     if (this.state.betAmount + 100 > this.state.playerChips) {
       this.setState({
-        gameMessage: "You don't have enough chips to bet that amount"
+        gameMessage: "You don't have enough chips to bet that amount",
       });
     } else {
       this.setState({
-        betAmount: this.state.betAmount + 100
+        betAmount: this.state.betAmount + 100,
       });
     }
   };
 
-  increaseBetAllIn = event => {
+  increaseBetAllIn = (event) => {
     this.setState({
-      betAmount: this.state.playerChips
+      betAmount: this.state.playerChips,
     });
   };
 
-  clearBets = event => {
+  clearBets = (event) => {
     this.setState({
-      betAmount: 0
+      betAmount: 0,
     });
   };
 
@@ -218,15 +220,15 @@ export default class App extends Component {
       KING: 10,
       QUEEN: 10,
       JACK: 10,
-      '10': 10,
-      '9': 9,
-      '8': 8,
-      '7': 7,
-      '6': 6,
-      '5': 5,
-      '4': 4,
-      '3': 3,
-      '2': 2
+      10: 10,
+      9: 9,
+      8: 8,
+      7: 7,
+      6: 6,
+      5: 5,
+      4: 4,
+      3: 3,
+      2: 2,
     };
 
     return cardValues[value];
@@ -237,15 +239,15 @@ export default class App extends Component {
     // If player bet is zero
     if (this.state.playerChips === 0) {
       this.setState({
-        gameMessage: `You have no more money! Press 'NEW GAME' to play again.`
+        gameMessage: `You have no more money! Press 'NEW GAME' to play again.`,
       });
     } else if (this.state.betAmount === 0) {
       this.setState({
-        gameMessage: 'You have to bet some money!'
+        gameMessage: 'You have to bet some money!',
       });
     } else if (this.state.betAmount > this.state.playerChips) {
       this.setState({
-        gameMessage: 'You do not have that much money'
+        gameMessage: 'You do not have that much money',
       });
     } else {
       // Deal with initial betting
@@ -254,22 +256,22 @@ export default class App extends Component {
         playerChips: this.state.playerChips - this.state.betAmount,
         chipsInPlay: this.state.betAmount,
         gameMessage: 'Choose an action...',
-        winAmount: 0
+        winAmount: 0,
       });
       // Draw 4 cards from the deck
       fetch(
         `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=4`
       )
-        .then(res => res.json())
-        .then(json => {
+        .then((res) => res.json())
+        .then((json) => {
           // Check remaining cards and shuffle deck if remaining cards is less than 100 cards, or 25% of deck
           console.log(json.remaining);
           if (json.remaining < 100) {
             fetch(
               `https://deckofcardsapi.com/api/deck/${this.state.deckId}/shuffle/`
             )
-              .then(res => res.json())
-              .then(json => {
+              .then((res) => res.json())
+              .then((json) => {
                 console.log(json);
                 console.log('Deck reshuffled!');
               });
@@ -289,7 +291,7 @@ export default class App extends Component {
               playerHand: [
                 ...this.state.playerHand,
                 json.cards[0],
-                json.cards[2]
+                json.cards[2],
               ],
               playerHasAce: true,
               playerSplittable: true,
@@ -297,11 +299,11 @@ export default class App extends Component {
               dealerHand: [
                 ...this.state.dealerHand,
                 json.cards[1],
-                json.cards[3]
+                json.cards[3],
               ],
               dealerHasAce: false,
               dealerScore: this.state.dealerScore + value1 + value3,
-              dealerInitialScore: value3
+              dealerInitialScore: value3,
             });
           } else if (value0 === 11 || value2 === 11) {
             this.setState({
@@ -310,18 +312,18 @@ export default class App extends Component {
               playerHand: [
                 ...this.state.playerHand,
                 json.cards[0],
-                json.cards[2]
+                json.cards[2],
               ],
               playerScore: this.state.playerScore + value0 + value2,
               playerHasAce: true,
               dealerHand: [
                 ...this.state.dealerHand,
                 json.cards[1],
-                json.cards[3]
+                json.cards[3],
               ],
               dealerHasAce: false,
               dealerScore: this.state.dealerScore + value1 + value3,
-              dealerInitialScore: value3
+              dealerInitialScore: value3,
             });
           } else if (value0 === value2) {
             this.setState({
@@ -331,17 +333,17 @@ export default class App extends Component {
               playerHand: [
                 ...this.state.playerHand,
                 json.cards[0],
-                json.cards[2]
+                json.cards[2],
               ],
               playerScore: this.state.playerScore + value0 + value2,
               dealerHand: [
                 ...this.state.dealerHand,
                 json.cards[1],
-                json.cards[3]
+                json.cards[3],
               ],
               dealerHasAce: false,
               dealerScore: this.state.dealerScore + value1 + value3,
-              dealerInitialScore: value3
+              dealerInitialScore: value3,
             });
           } else {
             this.setState({
@@ -350,17 +352,17 @@ export default class App extends Component {
               playerHand: [
                 ...this.state.playerHand,
                 json.cards[0],
-                json.cards[2]
+                json.cards[2],
               ],
               playerScore: this.state.playerScore + value0 + value2,
               dealerHand: [
                 ...this.state.dealerHand,
                 json.cards[1],
-                json.cards[3]
+                json.cards[3],
               ],
               dealerHasAce: false,
               dealerScore: this.state.dealerScore + value1 + value3,
-              dealerInitialScore: value3
+              dealerInitialScore: value3,
             });
           }
           // Check if dealer has two aces or an ace
@@ -368,24 +370,33 @@ export default class App extends Component {
             this.setState({
               dealerHasAce: true,
               dealerScore: 12,
-              insurance: true
+              insurance: true,
               // gameMessage: 'Insurance?'
+            });
+          } else if (
+            value1 + value3 === 17 &&
+            (value1 === 11 || value3 === 11)
+          ) {
+            this.setState({
+              dealerHasAce: true,
+              dealerSoft: true,
+              dealerScore: 17,
             });
           } else if (value3 === 11) {
             this.setState({
               dealerHasAce: true,
-              insurance: true
+              insurance: true,
               // gameMessage: 'Insurance?'
             });
           } else if (value1 === 11 || value3 === 11) {
             this.setState({
-              dealerHasAce: true
+              dealerHasAce: true,
             });
           }
           // After the ace checks
           this.blackJackChecker();
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     }
   }
 
@@ -397,14 +408,14 @@ export default class App extends Component {
       this.returnValue(this.state.playerHand[1].value) === 11
     ) {
       this.setState({
-        playerHasBlackjack: true
+        playerHasBlackjack: true,
       });
     } else if (
       this.returnValue(this.state.playerHand[1].value) === 10 &&
       this.returnValue(this.state.playerHand[0].value) === 11
     ) {
       this.setState({
-        playerHasBlackjack: true
+        playerHasBlackjack: true,
       });
     }
 
@@ -414,14 +425,14 @@ export default class App extends Component {
       this.returnValue(this.state.dealerHand[1].value) === 11
     ) {
       this.setState({
-        dealerHasBlackjack: true
+        dealerHasBlackjack: true,
       });
     } else if (
       this.returnValue(this.state.dealerHand[1].value) === 10 &&
       this.returnValue(this.state.dealerHand[0].value) === 11
     ) {
       this.setState({
-        dealerHasBlackjack: true
+        dealerHasBlackjack: true,
       });
     }
 
@@ -432,7 +443,7 @@ export default class App extends Component {
         pushes: this.state.pushes + 1,
         playerChips: this.state.playerChips + this.state.chipsInPlay,
         chipsInPlay: 0,
-        gameMessage: 'Push! You both have a Blackjack!'
+        gameMessage: 'Push! You both have a Blackjack!',
       });
     } else if (this.state.playerHasBlackjack) {
       this.setState({
@@ -445,7 +456,7 @@ export default class App extends Component {
           (3 * this.state.chipsInPlay) / 2,
         winAmount: (3 * this.state.chipsInPlay) / 2,
         chipsInPlay: 0,
-        gameMessage: 'Blackjack!'
+        gameMessage: 'Blackjack!',
       });
     } else if (this.state.dealerHasBlackjack) {
       this.setState({
@@ -453,7 +464,7 @@ export default class App extends Component {
         dealerWins: this.state.dealerWins + 1,
         dealerBlackjacks: this.state.dealerBlackjacks + 1,
         chipsInPlay: 0,
-        gameMessage: 'Dealer has a Blackjack!'
+        gameMessage: 'Dealer has a Blackjack!',
       });
     }
   }
@@ -463,7 +474,7 @@ export default class App extends Component {
     if (this.state.playerHasAce && this.state.playerScore > 21) {
       this.setState({
         playerScore: this.state.playerScore - 10,
-        playerHasAce: false
+        playerHasAce: false,
       });
     } else if (this.state.playerScore > 21) {
       this.setState({
@@ -471,7 +482,7 @@ export default class App extends Component {
         dealerWins: this.state.dealerWins + 1,
         playerBusts: this.state.playerBusts + 1,
         chipsInPlay: 0,
-        gameMessage: 'You Busted!'
+        gameMessage: 'You Busted!',
       });
     }
   }
@@ -487,7 +498,7 @@ export default class App extends Component {
         playerChips: this.state.playerChips + 2 * this.state.chipsInPlay,
         winAmount: this.state.chipsInPlay,
         chipsInPlay: 0,
-        gameMessage: 'Dealer busts, you win!'
+        gameMessage: 'Dealer busts, you win!',
       });
     } else if (
       this.state.playerScore > this.state.dealerScore &&
@@ -500,7 +511,7 @@ export default class App extends Component {
         playerChips: this.state.playerChips + 2 * this.state.chipsInPlay,
         winAmount: this.state.chipsInPlay,
         chipsInPlay: 0,
-        gameMessage: `You win!`
+        gameMessage: `You win!`,
       });
     } else if (this.state.playerScore === this.state.dealerScore) {
       this.setState({
@@ -509,7 +520,7 @@ export default class App extends Component {
         // Set chips, return original chips in play if push
         playerChips: this.state.playerChips + this.state.chipsInPlay,
         chipsInPlay: 0,
-        gameMessage: 'You pushed!'
+        gameMessage: 'You pushed!',
       });
     } else {
       this.setState({
@@ -517,117 +528,145 @@ export default class App extends Component {
         dealerWins: this.state.dealerWins + 1,
         // Set chips
         chipsInPlay: 0,
-        gameMessage: 'You lost!'
+        gameMessage: 'You lost!',
       });
     }
   }
 
   // When player clicks HIT
-  handleDrawCardEvent = event => {
+  handleDrawCardEvent = (event) => {
     if (this.state.playerScore < 21) {
       fetch(
         `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
       )
-        .then(res => res.json())
-        .then(json => {
+        .then((res) => res.json())
+        .then((json) => {
           const newValue = this.returnValue(json.cards[0].value);
           // Handle if player hits multiple aces
           if (newValue === 11 && this.state.playerHasAce) {
             this.setState({
               playerScore: this.state.playerScore - 10,
               playerHasAce: true,
-              playerSplittable: false
+              playerSplittable: false,
             });
           } else if (newValue === 11) {
             this.setState({
               playerHasAce: true,
-              playerSplittable: false
+              playerSplittable: false,
             });
           }
           // Otherwise update player hand and player score from response
           this.setState({
             playerHand: [...this.state.playerHand, json.cards[0]],
             playerScore: this.state.playerScore + newValue,
-            playerSplittable: false
+            playerSplittable: false,
           });
           this.bustChecker();
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     }
   };
 
   // When player clicks STAND, execute dealer hits less than 17
-  handleStandEvent = event => {
+  handleStandEvent = (event) => {
     // If the dealer has an ace and is greater than 21, subtract 10 and set the ace flag to false, recursively call itself
-    if (this.state.dealerScore > 21 && this.state.dealerHasAce) {
+    // Handle soft 17
+    if (this.state.dealerSoft) {
+      fetch(
+        `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
+      )
+        .then((res) => res.json())
+        .then((json) => {
+          const softHit = this.returnValue(json.cards[0].value);
+          this.setState({
+            dealerHand: [...this.state.dealerHand, json.cards[0]],
+            dealerScore: this.state.dealerScore + softHit,
+            dealerSoft: false,
+          });
+          this.handleStandEvent();
+        });
+    } else if (this.state.dealerHasAce && this.state.dealerScore === 17) {
+      fetch(
+        `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
+      )
+        .then((res) => res.json())
+        .then((json) => {
+          const softHit = this.returnValue(json.cards[0].value);
+          this.setState({
+            dealerHand: [...this.state.dealerHand, json.cards[0]],
+            dealerScore: this.state.dealerScore + softHit,
+          });
+          this.handleStandEvent();
+        });
+    } else if (this.state.dealerScore > 21 && this.state.dealerHasAce) {
       this.setState({
         dealerScore: this.state.dealerScore - 10,
-        dealerHasAce: false
+        dealerHasAce: false,
       });
       this.handleStandEvent();
     } else if (this.state.dealerScore < 17) {
       fetch(
         `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
       )
-        .then(res => res.json())
-        .then(json => {
+        .then((res) => res.json())
+        .then((json) => {
           const newValue = this.returnValue(json.cards[0].value);
           // Handle if dealer hits multiple aces
           if (newValue === 11 && this.state.dealerHasAce) {
             this.setState({
               dealerScore: this.state.dealerScore - 10,
-              dealerHasAce: true
+              dealerHasAce: true,
             });
           } else if (newValue === 11) {
             this.setState({
-              dealerHasAce: true
+              dealerHasAce: true,
             });
           }
           this.setState({
             playerPlaying: false,
             dealerHand: [...this.state.dealerHand, json.cards[0]],
-            dealerScore: this.state.dealerScore + newValue
+            dealerScore: this.state.dealerScore + newValue,
           });
           this.handleStandEvent();
         });
     } else {
       // Check winner because dealer did not bust and has 17 or above
       this.setState({
-        playerPlaying: false
+        playerPlaying: false,
       });
       this.checkWinner();
     }
   };
 
   // When player clicks DOUBLE DOWN
-  handleDoubleDownEvent = event => {
+  handleDoubleDownEvent = (event) => {
     // Handle Double Down Bet
     if (this.state.betAmount > this.state.playerChips) {
       this.setState({
-        gameMessage: 'You do not have enough to double down!'
+        gameMessage: 'You do not have enough to double down!',
       });
     } else {
       this.setState({
         playerChips: this.state.playerChips - this.state.betAmount,
-        chipsInPlay: this.state.chipsInPlay + this.state.betAmount
+        chipsInPlay: this.state.chipsInPlay + this.state.betAmount,
       });
       if (this.state.playerScore < 21) {
         fetch(
           `https://deckofcardsapi.com/api/deck/${this.state.deckId}/draw/?count=1`
         )
-          .then(res => res.json())
-          .then(json => {
+          .then((res) => res.json())
+          .then((json) => {
             const newValue = this.returnValue(json.cards[0].value);
             // Check if new card is an ace
             if (newValue === 11) {
               this.setState({
-                playerHasAce: true
+                playerHasAce: true,
               });
             }
             this.setState({
               playerHand: [...this.state.playerHand, json.cards[0]],
               playerScore: this.state.playerScore + newValue,
-              playerPlaying: false
+              playerPlaying: false,
             });
             // Check if the double down was a bust, if it was a bust do not execute auto hits for dealer
             this.bustChecker();
@@ -640,14 +679,14 @@ export default class App extends Component {
   };
 
   // When player clicks SPLIT
-  handleSplitEvent = event => {
+  handleSplitEvent = (event) => {
     this.setState({
-      dealerSplit: false
+      dealerSplit: false,
     });
   };
 
   // When player clicks DEAL reset the hand states but not the game states
-  handleDealEvent = event => {
+  handleDealEvent = (event) => {
     this.setState({
       playerPlaying: false,
       dealerHand: [],
@@ -661,7 +700,7 @@ export default class App extends Component {
       playerHasAce: false,
       playerHasBlackjack: false,
       playerSplittable: false,
-      gameMessage: ''
+      gameMessage: '',
     });
     this.handleDealHand();
   };
@@ -674,7 +713,7 @@ export default class App extends Component {
           {/* If game isn't started show Start Game button else show New Deck */}
           {this.state.gameStarted ? (
             <div>
-              <button className='lg red' onClick={() => this.handleEndGame()}>
+              <button className='sm red' onClick={() => this.handleEndGame()}>
                 New Game
               </button>
             </div>
@@ -685,7 +724,7 @@ export default class App extends Component {
         {this.state.gameMessage ? (
           <h2>{this.state.gameMessage}</h2>
         ) : (
-          <h2>Welcome to Blackjack! Please buy in and place a bet</h2>
+          <h2>Dealer hits on soft 17</h2>
         )}
         {this.state.gameStarted ? (
           <div className='hands-container'>
@@ -737,7 +776,7 @@ export default class App extends Component {
           clearBets={this.clearBets}
         />
         {!this.state.gameStarted ? (
-          <button className='lg' onClick={() => this.handleDealHand()}>
+          <button className='lg purple' onClick={() => this.handleDealHand()}>
             Deal!
           </button>
         ) : (

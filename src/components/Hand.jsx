@@ -7,7 +7,7 @@ export default class Hand extends Component {
   render() {
     let cards;
     if (this.props.cards.length) {
-      cards = this.props.cards.map(card => (
+      cards = this.props.cards.map((card) => (
         <Card key={card.code} card={card} history={this.props.history} />
       ));
     }
@@ -45,42 +45,42 @@ export default class Hand extends Component {
               <div className='playingButtons'>
                 <button
                   className='sm'
-                  onClick={event => this.props.handleDrawCardEvent(event)}
+                  onClick={(event) => this.props.handleDrawCardEvent(event)}
                 >
                   Hit
                 </button>
                 <button
                   className='sm'
-                  onClick={event => this.props.handleStandEvent(event)}
+                  onClick={(event) => this.props.handleStandEvent(event)}
                 >
                   Stand
                 </button>
                 {this.props.cards.length === 2 ? (
                   <button
                     className='sm'
-                    onClick={event => this.props.handleDoubleDownEvent(event)}
+                    onClick={(event) => this.props.handleDoubleDownEvent(event)}
                   >
                     Double Down
                   </button>
                 ) : (
                   ''
                 )}
-                {/* Show split button when both cards are the same value - NOT IMPLEMENTED YET*/}
+                {/* TODOL Show split button when both cards are the same value */}
                 {/* {this.props.playerSplittable ? (
-                            <button
-                            className="sm"
-                            onClick={event => this.props.handleSplitEvent(event)}
-                            >
-                            Split
-                            </button>
-                        ) : (
-                            ""
-                        )} */}
+                  <button
+                    className='sm'
+                    onClick={(event) => this.props.handleSplitEvent(event)}
+                  >
+                    Split
+                  </button>
+                ) : (
+                  ''
+                )} */}
               </div>
             ) : (
               <button
-                className='sm'
-                onClick={event => this.props.handleDealEvent(event)}
+                className='lg purple'
+                onClick={(event) => this.props.handleDealEvent(event)}
               >
                 Deal
               </button>
